@@ -26,7 +26,7 @@ $smarty->caching = false;
 $smarty->assign("root", $ROOT_DIR);
 
 //Set some global vars
-$smarty->assign("webpage", $WEBPAGE);
+$smarty->assign("webpage", array("title" => $_SETTINGS['title']));
 
 //Load user
 if (hasSession("userId")) {
@@ -43,6 +43,9 @@ $smarty->assign("links", array(
     "admin_overview" => makeLink("admin", "overview")
 ));
 
+$page = "";
+$file = "";
+$args = array();
 
 //Check page parameters
 if ($_SETTINGS['mod_rewrite']) {
@@ -64,12 +67,6 @@ if ($_SETTINGS['mod_rewrite']) {
         for ($i = 3; $i < sizeof($args); $i++) {
             setSession("arg" . ($i - 3), $args[$i]);
         }
-
-        if (file_exists("./pages/$page")) {
-            if (file_exists("./pages/$page/$file.php")) {
-                include("./pages/$page/$file.php");
-            }
-        }
     }
 } else {
     $page = getFilter("page");
@@ -82,34 +79,34 @@ if ($_SETTINGS['mod_rewrite']) {
         setSession("arg" . $i, $args[$i]);
         $i++;
     }
+}
 
-    $didInclude = false;
-    if (file_exists("./pages/$page")) {
-        if (file_exists("./pages/$page/$file.php")) {
-            include("./pages/$page/$file.php");
-            $didInclude = true;
-        }
+$didInclude = false;
+if (file_exists("./pages/$page")) {
+    if (file_exists("./pages/$page/$file.php")) {
+        include("./pages/$page/$file.php");
+        $didInclude = true;
+    }
+}
+
+//Show home
+if (!$didInclude) {
+    //Display posts
+    $posts = Post::getPosts();
+    $smartyPosts = array();
+    for ($i = 0; $i < sizeof($posts); $i++) {
+        $post = $posts[$i];
+        $smartyPosts[] = array(
+            "id" => $post->getId(),
+            "poster" => User::getUsernameById($post->getPoster()),
+            "postdate" => $post->getPostDate(),
+            "title" => $post->getTitle(),
+            "content" => $post->getContent()
+        );
     }
 
-    //Show home
-    if (!$didInclude) {
-        //Display posts
-        $posts = Post::getPosts();
-        $smartyPosts = array();
-        for ($i = 0; $i < sizeof($posts); $i++) {
-            $post = $posts[$i];
-            $smartyPosts[] = array(
-                "id" => $post->getId(),
-                "poster" => User::getUsernameById($post->getPoster()),
-                "postdate" => $post->getPostDate(),
-                "title" => $post->getTitle(),
-                "content" => $post->getContent()
-            );
-        }
-
-        $smarty->assign("posts", $smartyPosts);
-        $smarty->assign("page", "blog_home.tpl");
-    }
+    $smarty->assign("posts", $smartyPosts);
+    $smarty->assign("page", "blog_home.tpl");
 }
 
 //Assign user values last so that any session edits will be noticed

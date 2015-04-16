@@ -7,9 +7,6 @@ $SQL_DATABASE = "webprosjekt";
 $ROOT_DIR = "http://localhost/Web-Prosjekt";
 
 $_SETTINGS = array(
-    "mod_rewrite" => false
-);
-
-$WEBPAGE = array(
-    "title" => "Prosjekt Webutvikling"
+    "title" => "Prosjekt Webutvikling",
+    "mod_rewrite" => true
 );
