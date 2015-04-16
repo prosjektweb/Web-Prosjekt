@@ -1,3 +1,4 @@
+Tester git
 Klarte ikke koble meg på kark, timet bare ut hver gang jeg prøvde å laste opp noe.
 
 Live kopi finnes på http://95.34.229.181/oblig3/
