@@ -36,49 +36,80 @@ if (hasSession("userId")) {
 //Set default body
 $smarty->assign("body", "body.tpl");
 
+//Setup links
+$smarty->assign("links", array(
+    "user_login" => makeLink("user", "login"),
+    "user_logout" => makeLink("user", "logout"),
+    "admin_overview" => makeLink("admin", "overview")
+));
+
+
 //Check page parameters
-if (array_key_exists("REDIRECT_URL", $_SERVER)) {
-    $args = explode('/', $_SERVER['REDIRECT_URL']);  // REDIRECT_URL is provided by Apache when a URL has been rewritten
-    array_shift($args);
-    $data = array();
-    for ($i = 0; $i < count($args); $i++) {
-        $data[] = $args[$i];
-    }
-//Hardcoded 1 /oblig3/....
-    $page = $args[1];
-    $file = $args[2];
+if ($_SETTINGS['mod_rewrite']) {
+    if (array_key_exists("REDIRECT_URL", $_SERVER)) {
+        $args = explode('/', $_SERVER['REDIRECT_URL']);  // REDIRECT_URL is provided by Apache when a URL has been rewritten
+        array_shift($args);
+        $data = array();
+        for ($i = 0; $i < count($args); $i++) {
+            $data[] = $args[$i];
+        }
+        //Hardcoded 1 /oblig3/....
+        $page = $args[1];
+        $file = $args[2];
 
-    //The next arguments are parameters
-    //A little hacky way to do things
-    //But we centralize it using a function to get these parameters
-    //So that we can change the system later without compromising all the code
-    for ($i = 3; $i < sizeof($args); $i++) {
-        setSession("arg" . ($i - 3), $args[$i]);
-    }
+        //The next arguments are parameters
+        //A little hacky way to do things
+        //But we centralize it using a function to get these parameters
+        //So that we can change the system later without compromising all the code
+        for ($i = 3; $i < sizeof($args); $i++) {
+            setSession("arg" . ($i - 3), $args[$i]);
+        }
 
-    if (file_exists("./pages/$page")) {
-        if (file_exists("./pages/$page/$file.php")) {
-            include("./pages/$page/$file.php");
+        if (file_exists("./pages/$page")) {
+            if (file_exists("./pages/$page/$file.php")) {
+                include("./pages/$page/$file.php");
+            }
         }
     }
 } else {
-    //Display posts
-    $posts = Post::getPosts();
-    $smartyPosts = array();
-    for ($i = 0; $i < sizeof($posts); $i++) {
-        $post = $posts[$i];
-        $smartyPosts[] = array(
-            "id" => $post->getId(),
-            "poster" => User::getUsernameById($post->getPoster()),
-            "postdate" => $post->getPostDate(),
-            "title" => $post->getTitle(),
-            "content" => $post->getContent()
-        );
+    $page = getFilter("page");
+    $file = getFilter("file");
+    //args
+    $i = 0;
+    $args = array();
+    while (array_key_exists("arg" . $i, $_GET)) {
+        $args[$i] = getFilter("arg" . $i);
+        setSession("arg" . $i, $args[$i]);
+        $i++;
     }
 
-    $smarty->assign("posts", $smartyPosts);
+    $didInclude = false;
+    if (file_exists("./pages/$page")) {
+        if (file_exists("./pages/$page/$file.php")) {
+            include("./pages/$page/$file.php");
+            $didInclude = true;
+        }
+    }
 
-    $smarty->assign("page", "blog_home.tpl");
+    //Show home
+    if (!$didInclude) {
+        //Display posts
+        $posts = Post::getPosts();
+        $smartyPosts = array();
+        for ($i = 0; $i < sizeof($posts); $i++) {
+            $post = $posts[$i];
+            $smartyPosts[] = array(
+                "id" => $post->getId(),
+                "poster" => User::getUsernameById($post->getPoster()),
+                "postdate" => $post->getPostDate(),
+                "title" => $post->getTitle(),
+                "content" => $post->getContent()
+            );
+        }
+
+        $smarty->assign("posts", $smartyPosts);
+        $smarty->assign("page", "blog_home.tpl");
+    }
 }
 
 //Assign user values last so that any session edits will be noticed
@@ -104,8 +135,14 @@ if (hasSession("error")) {
 //A little hacky way to do things
 //But we centralize it using a function to get these parameters
 //So that we can change the system later without compromising all the code
-if (array_key_exists("REDIRECT_URL", $_SERVER)) {
-    for ($i = 3; $i < sizeof($args); $i++) {
-        unsetSession("arg" . ($i - 3), $args[$i]);
+if (sizeof($args) > 0) {
+    if ($_SETTINGS['mod_rewrite']) {
+        for ($i = 3; $i < sizeof($args); $i++) {
+            unsetSession("arg" . ($i - 3));
+        }
+    } else {
+        for ($i = 0; $i < sizeof($args); $i++) {
+            unsetSession("arg" . ($i));
+        }
     }
 }

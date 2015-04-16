@@ -19,7 +19,7 @@
                             <font color="red"><p>* {$error}</p></font>                       
                         {/foreach}
                     {/if}
-                    <form action="{$root}/user/login" method="POST">
+                    <form action="{$links.user_login}" method="POST">
                         <div class="form-group">
                             <p>Username:</p>
                             <input type="text" placeholder="Username" class="form-control" name="username">

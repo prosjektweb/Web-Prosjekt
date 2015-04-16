@@ -1,6 +1,24 @@
 <?php
 
 
+function makeLink($page, $file, $vars = null)
+{
+    include("config.php");
+    if($_SETTINGS['mod_rewrite']) {
+        $str = "/" . $page . "/" . $file . "/";
+        for($i=0; $i < sizeof($vars); $i++) {
+            $str .= $vars[i] . "/";
+        }
+        return $str;
+    } else {
+        $str = "index.php?page=" . $page . "&file=" . $file;
+        for($i=0; $i < sizeof($vars); $i++) {
+            $str .= "&arg$i=" . $vars[$i];
+        }
+        return $str;
+    }
+}
+        
 /**
  * 
  * @param type $index

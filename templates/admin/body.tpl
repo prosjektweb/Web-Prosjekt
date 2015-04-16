@@ -22,10 +22,10 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="{$root}/admin/overview">Overview</a></li>
-                    <li><a href="{$root}/admin/posts">Posts</a></li>
-                    <li><a href="{$root}/admin/users">User Administration</a></li>
-                    <li><a href="{$root}/admin/configuration">Configuration</a></li>
+                    <li class="active"><a href="{$root}">Overview</a></li>
+                    <li><a href="{$links.admin_posts}">Posts</a></li>
+                    <li><a href="{$links.admin_users}">User Administration</a></li>
+                    <li><a href="{$links.admin_configuration}">Configuration</a></li>
                 </ul>
                 <ul class="nav nav-sidebar">
                 </ul>

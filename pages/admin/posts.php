@@ -10,6 +10,15 @@ if (!isAdmin()) {
 
 global $smarty;
 $smarty->assign("body", "admin/body.tpl");
+$smarty->assign("links", array(
+    "admin_posts" => makeLink("admin", "posts"),
+    "admin_users" => makeLink("admin", "users"),
+    "admin_configuration" => makeLink("admin", "configuration"),
+    "admin_posts_new" => makeLink("admin", "posts", array("new")),
+    "admin_post_new_submit" => makeLink("admin", "posts", array("new", "submit")),
+    "admin_posts_edit" => makeLink("admin", "posts", array("edit", "")),
+    "admin_posts_delete" => makeLink("admin", "posts", array("delete", ""))
+));
 
 if (getArg(0) == "new") {
     $smarty->assign("page", "admin/posts/new.tpl");

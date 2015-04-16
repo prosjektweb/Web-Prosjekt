@@ -1,6 +1,6 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Posts</h1>
-    <form class="navbar-form" action="{$root}/admin/posts/new" method="POST">
+    <form class="navbar-form" action="{$links.admin_posts_new}" method="POST">
         <button type="submit" class="btn btn-success">New post</button>
     </form>
     <script type="text/javascript">
@@ -11,14 +11,14 @@
 
         function doEdit(id)
         {
-            redirect("{$root}/admin/posts/edit/" + id);
+            redirect("{$links.admin_posts_edit}" + id);
         }
 
         function doDelete(id)
         {
             if (confirm("Are you sure you want to delete this post?"))
             {
-                redirect("{$root}/admin/posts/delete/" + id);
+                redirect("{$links.admin_posts_delete}" + id);
             }
         }
     </script>

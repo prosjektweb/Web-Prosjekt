@@ -11,7 +11,7 @@
             <strong>Post complete!</strong>
         </div>
     {else}
-        <form action="{$root}/admin/posts/new/submit" method="POST">
+        <form action="{$links.admin_post_new_submit}" method="POST">
             <h4>Title:</h4>
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
             <br />
