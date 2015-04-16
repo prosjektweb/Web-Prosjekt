@@ -1,0 +1,111 @@
+<?php
+
+session_start();
+//Utilities
+include("util.php");
+//Blog module
+include("modules/Blog.php");
+//Smarty module
+require 'modules/smarty/libs/Smarty.class.php';
+
+//Configuration
+require 'config.php';
+
+//Load SQL
+require 'modules/sql.php';
+
+//Create our Smarty object
+global $smarty;
+$smarty = new Smarty();
+
+//Options
+$smarty->debugging = false;
+$smarty->caching = false;
+
+//Set some path urls because of mod rewrite
+$smarty->assign("root", $ROOT_DIR);
+
+//Set some global vars
+$smarty->assign("webpage", $WEBPAGE);
+
+//Load user
+if (hasSession("userId")) {
+    setSession("user", User::load(session("userId")));
+}
+
+//Set default body
+$smarty->assign("body", "body.tpl");
+
+//Check page parameters
+if (array_key_exists("REDIRECT_URL", $_SERVER)) {
+    $args = explode('/', $_SERVER['REDIRECT_URL']);  // REDIRECT_URL is provided by Apache when a URL has been rewritten
+    array_shift($args);
+    $data = array();
+    for ($i = 0; $i < count($args); $i++) {
+        $data[] = $args[$i];
+    }
+//Hardcoded 1 /oblig3/....
+    $page = $args[1];
+    $file = $args[2];
+
+    //The next arguments are parameters
+    //A little hacky way to do things
+    //But we centralize it using a function to get these parameters
+    //So that we can change the system later without compromising all the code
+    for ($i = 3; $i < sizeof($args); $i++) {
+        setSession("arg" . ($i - 3), $args[$i]);
+    }
+
+    if (file_exists("./pages/$page")) {
+        if (file_exists("./pages/$page/$file.php")) {
+            include("./pages/$page/$file.php");
+        }
+    }
+} else {
+    //Display posts
+    $posts = Post::getPosts();
+    $smartyPosts = array();
+    for ($i = 0; $i < sizeof($posts); $i++) {
+        $post = $posts[$i];
+        $smartyPosts[] = array(
+            "id" => $post->getId(),
+            "poster" => User::getUsernameById($post->getPoster()),
+            "postdate" => $post->getPostDate(),
+            "title" => $post->getTitle(),
+            "content" => $post->getContent()
+        );
+    }
+
+    $smarty->assign("posts", $smartyPosts);
+
+    $smarty->assign("page", "blog_home.tpl");
+}
+
+//Assign user values last so that any session edits will be noticed
+$smarty->assign("user", array(
+    "isAdmin" => "true",
+    "isSignedIn" => hasSession("userId") ? "true" : "false",
+    "displayName" => hasSession("userId") ? (session("user")->getUsername()) : ""
+));
+
+
+//If we have an error unset it
+if (hasSession("error")) {
+    //Display error page
+    $smarty->assign("page", "error.tpl");
+    $smarty->assign("errorMsg", session("error"));
+    $smarty->display($smarty->getTemplateVars("body"));
+    //Unset error
+    unsetSession("error");
+} else {
+    $smarty->display($smarty->getTemplateVars("body"));
+}
+//The next arguments are parameters
+//A little hacky way to do things
+//But we centralize it using a function to get these parameters
+//So that we can change the system later without compromising all the code
+if (array_key_exists("REDIRECT_URL", $_SERVER)) {
+    for ($i = 3; $i < sizeof($args); $i++) {
+        unsetSession("arg" . ($i - 3), $args[$i]);
+    }
+}
