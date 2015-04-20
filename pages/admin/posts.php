@@ -17,6 +17,7 @@ $smarty->assign("links", array(
     "admin_posts_new" => makeLink("admin", "posts", array("new")),
     "admin_post_new_submit" => makeLink("admin", "posts", array("new", "submit")),
     "admin_posts_edit" => makeLink("admin", "posts", array("edit", "")),
+    "admin_posts_edit_submit" => makeLink("admin", "posts", array("edit", "submit")),
     "admin_posts_delete" => makeLink("admin", "posts", array("delete", ""))
 ));
 
@@ -78,13 +79,45 @@ if (getArg(0) == "new") {
     }
     if(getArg(0) == "edit")
     {
-        $id = htmlspecialchars(getArg(1));
-        echo "edit is not implemented";
-        if(is_numeric($id))
-        {
-            Post::edit($id);
-        }
+        $smarty->assign("page", "admin/posts/edit.tpl");
 
+        $smarty->assign("post", array(
+            "title" => "",
+            "content" => ""
+        ));
+
+        $smarty->assign("post_error", array());
+        $smarty->assign("post_success", "false");
+
+        if (getArg(1) == "submit") {
+            //Do form validation
+            $title = postFilter("post_title");
+            $content = postFilter("post_content");
+
+            $error = array();
+            if ($title == "") {
+                $error[] = "* Title can not be empty";
+            }
+            if ($content == "") {
+                $error[] = "* Content can not be empty";
+            }
+            if (strlen($title) > 50) {
+                $error[] = "* Title must be 1-50 characters in length. Current length: (" . strlen($title) . ")";
+            }
+            if (strlen($content) > 1000) {
+                $error[] = "* Content must be between 1-1000 characters in length. Current length: (" . strlen($content) . ")";
+            }
+
+            if (sizeof($error) > 0) {
+                //Error happened
+                $smarty->assign("post_error", $error);
+            } else {
+                //Start processing
+                Post::edit($id, $title, $content);
+                //Pdo insert
+                $smarty->assign("post_success", "true");
+            }
+        }
     }
 
     //Get all posts

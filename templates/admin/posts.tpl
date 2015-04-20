@@ -11,7 +11,11 @@
 
         function doEdit(id)
         {
-            redirect("{$links.admin_posts_edit}" + id);
+            if (confirm("Are you sure you want to edit this post?"))
+            {
+                redirect("{$links.admin_posts_edit}" + id);
+            }
+
         }
 
         function doDelete(id)

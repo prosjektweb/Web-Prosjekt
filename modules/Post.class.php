@@ -110,9 +110,18 @@ class Post {
         return false;
     }
 
-    static function edit($id)
+    function edit($id, $title, $content)
     {
-
+        try {
+            $stmt = getDB()->prepare("INSERT INTO posts (title, content, editDate) VALUES(:title, :content, NOW()) WHERE ID=$id");
+            $stmt->execute(array(
+                "title" => $title,
+                "content" => $content,
+            ));
+        } catch (Exception $ex) {
+            setSession("error", $ex->getMessage());
+        }
+        return -1;
     }
 
     /**
