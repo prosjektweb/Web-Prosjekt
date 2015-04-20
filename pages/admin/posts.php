@@ -76,6 +76,16 @@ if (getArg(0) == "new") {
             Post::delete($id);
         } 
     }
+    if(getArg(0) == "edit")
+    {
+        $id = htmlspecialchars(getArg(1));
+        echo "edit is not implemented";
+        if(is_numeric($id))
+        {
+            Post::edit($id);
+        }
+
+    }
 
     //Get all posts
     $posts = Post::getPosts();

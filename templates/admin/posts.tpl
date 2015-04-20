@@ -44,7 +44,7 @@
                             <td>{$post.postdate}</td>
                             <td>{$post.poster|capitalize}</td>
                             <td>
-                                <button type="button" disabled="true" onClick="doEdit('{$post.id}')" class="btn btn-success">Edit</button>
+                                <button type="button" onClick="doEdit('{$post.id}')" class="btn btn-success">Edit</button>
                                 <button type="button" onClick="doDelete('{$post.id}')" class="btn btn-danger">Delete</button>
                             </td>
                         </tr>

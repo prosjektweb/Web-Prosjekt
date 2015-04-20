@@ -110,6 +110,11 @@ class Post {
         return false;
     }
 
+    static function edit($id)
+    {
+
+    }
+
     /**
      * 
      * @return type
