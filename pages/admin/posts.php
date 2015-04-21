@@ -65,20 +65,8 @@ if (getArg(0) == "new") {
             $smarty->assign("post_success", "true");
         }
     }
-} else {
-    
-    if(getArg(0) == "delete")
-    {
-        $id = htmlspecialchars(getArg(1));
-        echo "is delete";
-        if(is_numeric($id))
-        {
-            //Attempt to delete
-            Post::delete($id);
-        } 
-    }
-    if(getArg(0) == "edit")
-    {
+} else
+    if (getArg(0) == "edit") {
         $smarty->assign("page", "admin/posts/edit.tpl");
 
         $smarty->assign("post", array(
@@ -118,22 +106,30 @@ if (getArg(0) == "new") {
                 $smarty->assign("post_success", "true");
             }
         }
-    }
+    } else {
 
-    //Get all posts
-    $posts = Post::getPosts();
-    $smartyPosts = array();
-    for ($i = 0; $i < sizeof($posts); $i++) {
-        $post = $posts[$i];
-        $smartyPosts[] = array(
-            "id" => $post->getId(),
-            "poster" => User::getUsernameById($post->getPoster()),
-            "postdate" => $post->getPostDate(),
-            "title" => $post->getTitle(),
-            "content" => $post->getContent()
-        );
-    }
-    $smarty->assign("posts", $smartyPosts);
+        if (getArg(0) == "delete") {
+            $id = htmlspecialchars(getArg(1));
+            echo "is delete";
+            if (is_numeric($id)) {
+                //Attempt to delete
+                Post::delete($id);
+            }
+        }
+        //Get all posts
+        $posts = Post::getPosts();
+        $smartyPosts = array();
+        for ($i = 0; $i < sizeof($posts); $i++) {
+            $post = $posts[$i];
+            $smartyPosts[] = array(
+                "id" => $post->getId(),
+                "poster" => User::getUsernameById($post->getPoster()),
+                "postdate" => $post->getPostDate(),
+                "title" => $post->getTitle(),
+                "content" => $post->getContent()
+            );
+        }
+        $smarty->assign("posts", $smartyPosts);
 
-    $smarty->assign("page", "admin/posts.tpl");
-}
+        $smarty->assign("page", "admin/posts.tpl");
+    }
