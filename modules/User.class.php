@@ -5,6 +5,7 @@ class User {
     var $id;
     var $username;
     var $password;
+    var $group;
 
     function __construct() {
         
@@ -16,6 +17,10 @@ class User {
 
     function getUsername() {
         return $this->username;
+    }
+
+    function getGroupId() {
+        return $this->group;
     }
 
     static function getUsernameById($id) {
