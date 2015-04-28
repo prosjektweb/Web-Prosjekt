@@ -3,9 +3,12 @@
 class User {
 
     var $id;
+    var $email;
     var $username;
     var $password;
     var $group;
+    var $activationkey;
+    var $forgotkey;
 
     function __construct() {
         
