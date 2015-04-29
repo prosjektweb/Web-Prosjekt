@@ -2,6 +2,7 @@
 
 if (!isLoggedIn()) {
     headerRedirect($ROOT_DIR . "/user/login");
+    return;
 }
 if (!isAdmin()) {
     setSession("error", "Unauthorized.");
@@ -22,7 +23,7 @@ $smarty->assign("links", array(
 ));
 
 if (getArg(0) == "new") {
-    $smarty->assign("page", "admin/posts/new.tpl");
+    $smarty->assign("page", "admin/posts/register.tpl");
 
     $smarty->assign("post", array(
         "title" => "",
