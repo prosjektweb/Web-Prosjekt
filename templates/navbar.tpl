@@ -12,6 +12,7 @@
                         <input type="password" placeholder="Password" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
+
                 </form>
             {else}
                 {if $user.isAdmin eq "true"}

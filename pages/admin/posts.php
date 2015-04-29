@@ -2,6 +2,7 @@
 
 if (!isLoggedIn()) {
     headerRedirect($ROOT_DIR . "/user/login");
+    return;
 }
 if (!isAdmin()) {
     setSession("error", "Unauthorized.");
@@ -31,7 +32,7 @@ addLink("admin_posts_edit", "admin", "posts", array("edit", "", ""));
 addLink("admin_posts_delete", "admin", "posts", array("delete"));
 
 if (getArg(0) == "new") {
-    $smarty->assign("page", "admin/posts/new.tpl");
+    $smarty->assign("page", "admin/posts/register.tpl");
 
     $smarty->assign("post", array(
         "title" => "",
