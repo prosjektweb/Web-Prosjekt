@@ -12,9 +12,7 @@ global $smarty;
 $smarty->assign("body", "admin/body.tpl");
 $smarty->assign("page", "admin/overview.tpl");
 
-$smarty->assign("links", array(
-    "admin_posts" => makeLink("admin", "posts"),
-    "admin_users" => makeLink("admin", "users"),
-    "admin_configuration" => makeLink("admin", "configuration")
-));
-
+//Links
+addLink("admin_posts", "admin", "posts");
+addLink("admin_users", "admin", "users");
+addLink("admin_configuration", "admin", "configuration");

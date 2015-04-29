@@ -36,12 +36,11 @@ if (hasSession("userId")) {
 //Set default body
 $smarty->assign("body", "body.tpl");
 
-//Setup links
-$smarty->assign("links", array(
-    "user_login" => makeLink("user", "login"),
-    "user_logout" => makeLink("user", "logout"),
-    "admin_overview" => makeLink("admin", "overview")
-));
+//Add links
+addLink("user_login", "user", "login");
+addLink("user_logout", "user", "logout");
+addLink("admin_overview", "admin", "overview");
+
 
 $page = "";
 $file = "";
@@ -116,6 +115,8 @@ $smarty->assign("user", array(
     "displayName" => hasSession("userId") ? (session("user")->getUsername()) : ""
 ));
 
+global $links;
+$smarty->assign("links", $links);
 
 //If we have an error unset it
 if (hasSession("error")) {

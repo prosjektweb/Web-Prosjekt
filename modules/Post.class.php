@@ -59,6 +59,28 @@ class Post {
     }
 
     /**
+     * @param $which
+     * @return array
+     */
+    static function get($which) {
+        try {
+            $stmt = getDB()->prepare("SELECT * FROM posts WHERE id= ?");
+            $stmt->bindParam(1, $which);
+            $stmt->execute();
+
+            $post = $stmt->fetchObject("Post");
+            if ($post) {
+                return $post;
+            } else {
+                return null;
+            }
+        } catch (Exception $ex) {
+            setSession("error", $ex->getMessage());
+        }
+        return null; //Return null in case of exception. Good night website
+    }
+
+    /**
      * 
      * @param type $where
      */
@@ -110,10 +132,10 @@ class Post {
         return false;
     }
 
-    function edit($id, $title, $content)
+    static function edit($id, $title, $content)
     {
         try {
-            $stmt = getDB()->prepare("INSERT INTO posts (title, content, editDate) VALUES(:title, :content, NOW()) WHERE ID=$id");
+            $stmt = getDB()->prepare("UPDATE posts SET title=$title, content=$content, editDate=Now() WHERE ID=$id");
             $stmt->execute(array(
                 "title" => $title,
                 "content" => $content,

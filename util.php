@@ -1,5 +1,11 @@
 <?php
 
+global $links;
+
+function addLink($name, $page, $file, $vars = null) {
+    global $links;
+    $links[$name] = makeLink($page, $file, $vars);
+}
 
 function makeLink($page, $file, $vars = null)
 {

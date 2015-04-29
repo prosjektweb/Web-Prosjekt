@@ -11,7 +11,7 @@
             <strong>Post complete!</strong>
         </div>
     {else}
-        <form action="{$links.admin_post_edit_submit}" method="POST">
+        <form action="{$links.admin_posts_edit_submit}{$post.id}" method="POST">
             <h4>Title:</h4>
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
             <br />
