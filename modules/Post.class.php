@@ -135,11 +135,8 @@ class Post {
     static function edit($id, $title, $content)
     {
         try {
-            $stmt = getDB()->prepare("UPDATE posts SET title=$title, content=$content, editDate=Now() WHERE ID=$id");
-            $stmt->execute(array(
-                "title" => $title,
-                "content" => $content,
-            ));
+            $stmt = getDB()->prepare("UPDATE posts SET title='$title', content='$content', editDate=Now() WHERE ID=$id");
+            $stmt->execute();
         } catch (Exception $ex) {
             setSession("error", $ex->getMessage());
         }
