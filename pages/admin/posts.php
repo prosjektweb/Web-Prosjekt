@@ -107,7 +107,6 @@ if (getArg(0) == "new") {
             $smarty->assign("post_error", $error);
         } else {
 
-            //Pdo insert
             $smarty->assign("post_success", "true");
 
 

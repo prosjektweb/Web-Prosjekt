@@ -93,7 +93,23 @@ if (!$didInclude) {
     //Display posts
     $posts = Post::getPosts();
     $smartyPosts = array();
-    for ($i = 0; $i < sizeof($posts); $i++) {
+    $smartyArchivedPosts = array();
+
+    $postCount;
+    $archivePosts = false;
+
+    if(sizeof($posts) > 5){
+        $postCount = 5;
+        $archivePosts = true;
+    }
+    elseif(sizeof($posts) == 5){
+        $postCount = 5;
+    }
+    else{
+       $postCount = sizeof($posts);
+    }
+
+    for ($i = 0; $i < $postCount; $i++) {
         $post = $posts[$i];
         $smartyPosts[] = array(
             "id" => $post->getId(),
@@ -104,7 +120,22 @@ if (!$didInclude) {
         );
     }
 
+    if($archivePosts){
+
+        for ($i = 5; $i < sizeof($posts); $i++) {
+            $post = $posts[$i];
+            $smartyArchivedPosts[] = array(
+                "id" => $post->getId(),
+                "poster" => User::getUsernameById($post->getPoster()),
+                "postdate" => $post->getPostDate(),
+                "title" => $post->getTitle(),
+                "content" => $post->getContent()
+            );
+        }
+    }
+
     $smarty->assign("posts", $smartyPosts);
+    $smarty->assign("archivedposts", $smartyArchivedPosts);
     $smarty->assign("page", "blog_home.tpl");
 }
 

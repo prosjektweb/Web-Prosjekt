@@ -6,7 +6,16 @@
     <div class="sidebar-module">
         <h4>Archives</h4>
         <ol class="list-unstyled">
-            Nothing is archived just yet!
+            {if sizeof($archivedposts) <= 0 }
+                Nothing is archived just yet!
+            {else}
+                {foreach $archivedposts as $post}
+                    <div>
+                        |{$post.title}| Skrevet av: {$post.poster}
+                    </div>
+                {/foreach}
+            {/if}
+
         </ol>
     </div>
     <div class="sidebar-module">
