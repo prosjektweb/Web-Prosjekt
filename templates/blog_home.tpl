@@ -12,7 +12,7 @@
             {strip}
                 {foreach $posts as $post}
                     <div class="blog-post">
-                        <h2 class="blog-post-title"><a href='/blog/view?id={$post.id}'>{$post.title}</a></h2>
+                        <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
                         <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p> 
                         {$post.content}
                     </div>

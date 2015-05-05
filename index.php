@@ -19,7 +19,7 @@ global $smarty;
 $smarty = new Smarty();
 
 //Options
-$smarty->debugging = false;
+$smarty->debugging = true;
 $smarty->caching = false;
 
 //Set some path urls because of mod rewrite
@@ -40,7 +40,7 @@ $smarty->assign("body", "body.tpl");
 addLink("user_login", "user", "login");
 addLink("user_logout", "user", "logout");
 addLink("admin_overview", "admin", "overview");
-
+addLink("post_view", "blog", "view");
 
 $page = "";
 $file = "";
@@ -90,54 +90,64 @@ if (file_exists("./pages/$page")) {
 
 //Show home
 if (!$didInclude) {
-    //Display posts
-    $posts = Post::getPosts();
-    $smartyPosts = array();
-    $smartyArchivedPosts = array();
 
-    $postCount;
-    $archivePosts = false;
+	//Main page
+	if($page == "" || $file == "") {
+		
 
-    if(sizeof($posts) > 5){
-        $postCount = 5;
-        $archivePosts = true;
-    }
-    elseif(sizeof($posts) == 5){
-        $postCount = 5;
-    }
-    else{
-       $postCount = sizeof($posts);
-    }
+		//Display posts
+		$posts = Post::getPosts();
+		$smartyPosts = array();
+		$smartyArchivedPosts = array();
+		
+		$postCount;
+		$archivePosts = false;
+		
+		if(sizeof($posts) > 5){
+			$postCount = 5;
+			$archivePosts = true;
+		}
+		elseif(sizeof($posts) == 5){
+			$postCount = 5;
+		}
+		else{
+			$postCount = sizeof($posts);
+		}
+		
+		for ($i = 0; $i < $postCount; $i++) {
+			$post = $posts[$i];
+			$smartyPosts[] = array(
+					"id" => $post->getId(),
+					"poster" => User::getUsernameById($post->getPoster()),
+					"postdate" => $post->getPostDate(),
+					"title" => $post->getTitle(),
+					"content" => $post->getContent()
+			);
+		}
 
-    for ($i = 0; $i < $postCount; $i++) {
-        $post = $posts[$i];
-        $smartyPosts[] = array(
-            "id" => $post->getId(),
-            "poster" => User::getUsernameById($post->getPoster()),
-            "postdate" => $post->getPostDate(),
-            "title" => $post->getTitle(),
-            "content" => $post->getContent()
-        );
-    }
-
-    if($archivePosts){
-
-        for ($i = 5; $i < sizeof($posts); $i++) {
-            $post = $posts[$i];
-            $smartyArchivedPosts[] = array(
-                "id" => $post->getId(),
-                "poster" => User::getUsernameById($post->getPoster()),
-                "postdate" => $post->getPostDate(),
-                "title" => $post->getTitle(),
-                "content" => $post->getContent()
-            );
-        }
-    }
-
-    $smarty->assign("posts", $smartyPosts);
-    $smarty->assign("archivedposts", $smartyArchivedPosts);
-    $smarty->assign("page", "blog_home.tpl");
+		if($archivePosts){
+		
+			for ($i = 5; $i < sizeof($posts); $i++) {
+				$post = $posts[$i];
+				$smartyArchivedPosts[] = array(
+						"id" => $post->getId(),
+						"poster" => User::getUsernameById($post->getPoster()),
+						"postdate" => $post->getPostDate(),
+						"title" => $post->getTitle(),
+						"content" => $post->getContent()
+				);
+			}
+		}
+		$smarty->assign("archivedposts", $smartyArchivedPosts);
+		
+		$smarty->assign("posts", $smartyPosts);
+		$smarty->assign("page", "blog_home.tpl");
+		
+	} else {
+		//404
+	}
 }
+//Allt annet
 
 //Assign user values last so that any session edits will be noticed
 $smarty->assign("user", array(
