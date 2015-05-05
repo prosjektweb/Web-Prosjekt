@@ -50,14 +50,13 @@ class User {
      */
     static function login($username, $password) {
         try {
-            $test = sha1($password);
             $stmt = getDB()->prepare("SELECT * FROM users WHERE username= ?");
             $stmt->bindParam(1, $username);
             $stmt->execute();
-
             $user = $stmt->fetchObject("User");
+
             if ($user) {
-                if ($user->password == sha1($password)) {
+                if ($user->password == sha1($password . $user->salt)) {
                     return $user;
                 } else {
                     return null;
