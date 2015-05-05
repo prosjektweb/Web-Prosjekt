@@ -9,7 +9,9 @@
 
         <div class="col-sm-8 blog-main">
             {if $loginStatus eq "success"}
-
+				<div class="alert alert-success" role="alert">
+        			<strong>Success!</strong> You are now logged in.
+      			</div>
             {else}
                 <div class="well">
                     <p>
