@@ -138,7 +138,9 @@ if (!$didInclude) {
 				);
 			}
 
-            archive::generateArchive($archivePosts, $archivePosts[sizeof($archivePosts)-1]->getPostDate());
+            $datepost = ($smartyArchivedPosts[sizeof($smartyArchivedPosts)-1]);
+
+            $test = Archive::generateArchive($smartyArchivedPosts, $datepost['postdate']);
 		}
 		$smarty->assign("archivedposts", $smartyArchivedPosts);
 		
