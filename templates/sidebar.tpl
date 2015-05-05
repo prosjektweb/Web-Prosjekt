@@ -9,16 +9,12 @@
             <h4>Archives</h4>
             <ol class="list-unstyled">
 
-                {if sizeof($archivedposts) <= 0 }
-                    Nothing is archived just yet!
+                {foreach $months as $month}
 
-                {else}
-                    {foreach $archivedposts as $post}
-                        <div>
-                            |{$post.title}| Skrevet av: {$post.poster}
-                        </div>
-                    {/foreach}
-                {/if}
+                    <li><a href="{$links.view_archive}&month={$month}">{Archive::monthNumberToString($month)}</a></li>
+
+                {/foreach}
+
             </ol>
         {/if}
     </div>

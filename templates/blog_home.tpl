@@ -10,13 +10,24 @@
         <div class="col-sm-8 blog-main">
 
             {strip}
-                {foreach $posts as $post}
-                    <div class="blog-post">
-                        <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
-                        <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p> 
-                        {$post.content}
-                    </div>
-                {/foreach}
+                {if isset($smarty.get.month)}
+                    <h1>Arkiverte poster for {Archive::monthNumberToString($smarty.get.month)}</h1>
+                    {foreach $month as $post}
+                        <div class="blog-post">
+                            <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
+                            <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
+                            {$post.content}
+                        </div>
+                    {/foreach}
+                {else}
+                    {foreach $posts as $post}
+                        <div class="blog-post">
+                            <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
+                            <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
+                            {$post.content}
+                        </div>
+                    {/foreach}
+                {/if}
             {/strip}
         </div><!-- /.blog-main -->
 
