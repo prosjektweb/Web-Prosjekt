@@ -85,7 +85,7 @@ class Post {
      * @param type $where
      */
     static function getPosts($where = null) {
-        $resultat = getDB()->query("SELECT * FROM posts " . ($where != null ? $where : ""));
+        $resultat = getDB()->query("SELECT * FROM posts order by postDate;" . ($where != null ? $where : ""));
         $posts = array();
         while ($post = $resultat->fetchObject('Post')) {
             $posts[] = $post;

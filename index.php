@@ -137,6 +137,8 @@ if (!$didInclude) {
 						"content" => $post->getContent()
 				);
 			}
+
+            archive::generateArchive($archivePosts, $archivePosts[sizeof($archivePosts)-1]->getPostDate());
 		}
 		$smarty->assign("archivedposts", $smartyArchivedPosts);
 		
