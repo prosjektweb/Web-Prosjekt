@@ -50,7 +50,9 @@ $page = "";
 $file = "";
 $args = array();
 
-//Check page parameters
+/**
+ * Parse page parameters
+ */
 if ($_SETTINGS['mod_rewrite']) {
     if (array_key_exists("REDIRECT_URL", $_SERVER)) {
         $args = explode('/', $_SERVER['REDIRECT_URL']);  // REDIRECT_URL is provided by Apache when a URL has been rewritten
@@ -74,6 +76,7 @@ if ($_SETTINGS['mod_rewrite']) {
 } else {
     $page = getFilter("page");
     $file = getFilter("file");
+    
     //args
     $i = 0;
     $args = array();
@@ -84,6 +87,7 @@ if ($_SETTINGS['mod_rewrite']) {
     }
 }
 
+//Attempt to navigate to the specified URL
 $didInclude = false;
 if (file_exists("./pages/$page")) {
     if (file_exists("./pages/$page/$file.php")) {
@@ -92,85 +96,11 @@ if (file_exists("./pages/$page")) {
     }
 }
 
-//Show home
+//Check if 404, otherise redirect to home!
 if (!$didInclude) {
-
     //Main page
     if ($page == "" || $file == "") {
-
-
-
-        if (isset($_GET['month'])) {
-            $posts = Post::getPosts();
-            $smartyArchivedPosts = array();
-
-            for ($i = 5; $i < sizeof($posts); $i++) {
-                $post = $posts[$i];
-                $smartyArchivedPosts[] = array(
-                    "id" => $post->getId(),
-                    "poster" => User::getUsernameById($post->getPoster()),
-                    "postdate" => $post->getPostDate(),
-                    "title" => $post->getTitle(),
-                    "content" => $post->getContent()
-                );
-            }
-            Archive::setMonths($smartyArchivedPosts);
-
-            $array = Archive::getMonthArray($smartyArchivedPosts, $_GET['month']);
-            $smarty->assign("month", $array);
-            $smarty->assign("archivedposts", $smartyArchivedPosts);
-            $smarty->assign("page", "blog/blog_home.tpl");
-        } else {
-
-
-            //Display posts
-            $posts = Post::getPosts();
-            $smartyPosts = array();
-            $smartyArchivedPosts = array();
-
-            $postCount;
-            $archivePosts = false;
-
-            if (sizeof($posts) > 5) {
-                $postCount = 5;
-                $archivePosts = true;
-            } elseif (sizeof($posts) == 5) {
-                $postCount = 5;
-            } else {
-                $postCount = sizeof($posts);
-            }
-
-            for ($i = 0; $i < $postCount; $i++) {
-                $post = $posts[$i];
-                $smartyPosts[] = array(
-                    "id" => $post->getId(),
-                    "poster" => User::getUsernameById($post->getPoster()),
-                    "postdate" => $post->getPostDate(),
-                    "title" => $post->getTitle(),
-                    "content" => $post->getContent()
-                );
-            }
-
-            if ($archivePosts) {
-
-                for ($i = 5; $i < sizeof($posts); $i++) {
-                    $post = $posts[$i];
-                    $smartyArchivedPosts[] = array(
-                        "id" => $post->getId(),
-                        "poster" => User::getUsernameById($post->getPoster()),
-                        "postdate" => $post->getPostDate(),
-                        "title" => $post->getTitle(),
-                        "content" => $post->getContent()
-                    );
-                }
-
-                Archive::setMonths($smartyArchivedPosts);
-            }
-            $smarty->assign("archivedposts", $smartyArchivedPosts);
-
-            $smarty->assign("posts", $smartyPosts);
-            $smarty->assign("page", "blog/blog_home.tpl");
-        }
+        include("./pages/blog/home.php");
     } else {
         //404
         $smarty->assign("page", "404.tpl");
@@ -184,6 +114,9 @@ $smarty->assign("user", array(
     "displayName" => hasSession("userId") ? (session("user")->getUsername()) : ""
 ));
 
+/**
+ * Assign links
+ */
 global $links;
 $smarty->assign("links", $links);
 

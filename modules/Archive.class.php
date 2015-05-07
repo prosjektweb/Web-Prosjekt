@@ -2,14 +2,13 @@
 
 class Archive {
 
-    static function setMonths($array){
+    static function setMonths($array) {
         global $smarty;
 
         $months = array();
-        foreach($array as $post){
+        foreach ($array as $post) {
             $month = (new DateTime($post["postdate"]))->format('m');
-            if(!in_array($month,$months))
-            {
+            if (!in_array($month, $months)) {
                 $months[] = $month;
             }
         }
@@ -18,8 +17,7 @@ class Archive {
         $smarty->assign("months", $months);
     }
 
-    static function getMonthArray($array, $month)
-    {
+    static function getMonthArray($array, $month) {
         $monthArray = array();
 
         foreach ($array as $post) {
@@ -31,18 +29,18 @@ class Archive {
         return $monthArray;
     }
 
-    static function generateArchive($array, $datetime){
+    static function generateArchive($array, $datetime) {
         $month = (new DateTime($datetime))->format('m');
-        foreach($array as $post){
-            if((new DateTime($post["postdate"]))->format('m') == $month){
+        foreach ($array as $post) {
+            if ((new DateTime($post["postdate"]))->format('m') == $month) {
                 return $month;
             }
         }
     }
 
-    static function monthNumberToString($numMonth){
+    static function monthNumberToString($numMonth) {
 
-        switch($numMonth){
+        switch ($numMonth) {
             case 01 : return "Januar";
             case 02 : return "Februar";
             case 03 : return "Mars";
@@ -56,6 +54,6 @@ class Archive {
             case 11 : return "November";
             case 12 : return "Desember";
         }
-
     }
+
 }
