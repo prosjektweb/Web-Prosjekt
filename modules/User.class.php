@@ -1,5 +1,10 @@
 <?php
 
+class Rights
+{
+	
+}
+
 class User {
 
     var $id;
@@ -89,6 +94,76 @@ class User {
             setSession("error", $ex->getMessage());
         }
         return null; //Return null in case of exception. Good night website
+    }
+
+    /**
+     * @param $username
+     * @param $email
+     * @param $password
+     * @return null
+     *
+     * Function to register user.
+     */
+    static function registerUser($username, $email, $password) {
+        try {
+            $salt = User::rand_salt(16);
+            $group_id = "1";
+            $password = sha1($password . $salt);
+            $stmt = getDB()->prepare("INSERT INTO users (username, email, password, group_id, salt) VALUES(:username, :email, :password, :group_id, :salt)");
+            $stmt->execute(array(
+                "username" => $username,
+                "email" => $email,
+                "password" => $password,
+                "group_id" => $group_id,
+                "salt" => $salt
+            ));
+
+
+        } catch (Exception $ex) {
+            setSession("error", $ex->getMessage());
+        }
+        return null; //Return null in case of exception. Good night website
+
+    }
+
+    /**
+     * @param $length
+     * @return null|string
+     *
+     * Make random salt value for password protection
+     */
+
+    static function rand_salt($length){
+        $salt = null;
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $size = strlen($chars);
+        for ($i = 0; $i < $length; $i++){
+            $salt .= $chars[rand(0, $size - 1)];
+        }
+        return $salt;
+    }
+
+    /**
+     * @param $email
+     * @param $username
+     *
+     * Use php mail() function. Guidelines found at www.w3schools.com
+     */
+
+    static function user_activation($email, $username){
+        $to = $email;
+        $subject = 'Verification of user';
+        $message = '
+        Thank you for signing up!
+        Your account has been created.
+
+        To log in you need to activate your account by clicking the following link:
+        http://http://kark.hin.no/~530321/Webutvikling/Web-utvikling%20Prosjekt/
+        '.$username.'
+
+        ';
+
+
     }
 
 }

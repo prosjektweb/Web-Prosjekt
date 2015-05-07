@@ -11,21 +11,20 @@ $smarty->assign("page", "user/register.tpl");
 
 
 
-
 $params = array(
-    "usernameInput" => postFilter("usernameInput"),
-    "emailInput" => postFilter("emailInput"),
-    "emailRetype" => postFilter("emailRetype"),
-    "password" => postFilter("password"),
-    "passwordRetype" => postFilter("passwordRetype")
+    "usernameInput" => $_POST["usernameInput"],
+    "emailInput" => $_POST["emailInput"],
+    "emailRetype" => $_POST["emailRetype"],
+    "passwordInput" => $_POST["passwordInput"],
+    "passwordRetype" => $_POST["passwordRetype"]
 );
 
 
 $error = array();
 $status = "";
 
-if(hasPost("usernameInput") || hasPost("emailInput") || hasPost("emailRetype") ||
-    hasPost("password") || hasPost("passwordRetype"))
+if(isset($params['usernameInput']) || isset($params['emailInput']) || isset($params['emailRetype']) ||
+    isset($params['passwordInput']) || isset($params['passwordRetype']))
 {
 
     if ($params['usernameInput'] == "") {
@@ -37,7 +36,7 @@ if(hasPost("usernameInput") || hasPost("emailInput") || hasPost("emailRetype") |
     if ($params['emailRetype'] == "") {
         $error[] = "Please re-type email address.";
     }
-    if ($params['password'] == "") {
+    if ($params['passwordInput'] == "") {
         $error[] = "Please type in password.";
     }
     if ($params['passwordRetype'] == "") {
@@ -46,7 +45,7 @@ if(hasPost("usernameInput") || hasPost("emailInput") || hasPost("emailRetype") |
     if ($params['emailInput'] != $params['emailRetype']) {
         $error[] = "Email addresses do not match.";
     }
-    if ($params['password'] != $params['passwordRetype']){
+    if ($params['passwordInput'] != $params['passwordRetype']){
         $errors[] = "Passwords do not match.";
     }
     $status = "error";
@@ -54,12 +53,12 @@ if(hasPost("usernameInput") || hasPost("emailInput") || hasPost("emailRetype") |
     if (sizeof($error) > 0){
         $status = "error";
     }else{
-
+        $user = User::registerUser($params['usernameInput'], $params['emailInput'], $params['passwordInput']);
+        $status = "success";
     }
 
 }
 
 $smarty->assign("loginStatus", $status);
 $smarty->assign("errors", $error);
-
 ?>
