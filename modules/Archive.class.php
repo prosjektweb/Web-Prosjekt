@@ -5,17 +5,42 @@ class Archive {
     static function setMonths($array) {
         global $smarty;
 
+        $years = array();
+        foreach ($array as $post) {
+            $month = (new DateTime($post["postdate"]))->format('m');
+            $year = (new DateTime($post["postdate"]))->format('y');
+
+            if(!isset($years[$year])){
+                $years[$year] = array();
+            }
+
+            if (!in_array($month, $years[$year])) {
+                $years[$year][] = $month;
+            }
+        }
+        asort($years);
+
+        foreach($years as $year){
+            asort($year);
+        }
+
+        $smarty->assign("years", $years);
+    }
+
+    /*static function setMonths($array) {
+        global $smarty;
+
         $months = array();
         foreach ($array as $post) {
             $month = (new DateTime($post["postdate"]))->format('m');
-            if (!in_array($month, $months)) {
+            if (!in_array($month , $months)) {
                 $months[] = $month;
             }
         }
         asort($months);
 
         $smarty->assign("months", $months);
-    }
+    }*/
 
     static function getMonthArray($array, $month) {
         $monthArray = array();
