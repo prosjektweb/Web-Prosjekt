@@ -11,7 +11,7 @@
 
             {strip}
                 {if hasArg(0)}
-                    <h2 class="blog-post-title">Arkiverte poster for {Archive::monthNumberToString($smarty.get.arg0)} {$smarty.get.arg1}</h2><hr>
+                    <h2 class="blog-post-title">Arkiverte poster for {Archive::monthNumberToString(getArg(0))} {getArg(1)}</h2><hr>
                     {foreach $month as $post}
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
