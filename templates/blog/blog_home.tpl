@@ -26,6 +26,10 @@
                             <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
                             {$post.content}
                         </div>
+                        
+                        <p class="blog-post-meta">
+							- {$post.comments} Comments
+						</p>		
                     {/foreach}
                 {/if}
             {/strip}

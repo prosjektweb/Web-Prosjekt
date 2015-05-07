@@ -5,8 +5,6 @@ session_start();
 include("util.php");
 //Blog module
 include("modules/Blog.php");
-//Archive.class
-include("modules/Archive.class.php");
 //Smarty module
 require 'modules/smarty/libs/Smarty.class.php';
 
