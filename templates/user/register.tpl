@@ -16,15 +16,15 @@
                     {/foreach}
                 {/if}
                 <label for="usernameInput" class="sr-only">Username</label>
-                <input type="text" id="usernameInput" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
                 <label for="emailInput" class="sr-only">Email address</label>
-                <input type="email" id="emailInput" class="form-control" placeholder="Email address" >
+                <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" >
                 <label for="emailRetype" class="sr-only">Re-type email address</label>
-                <input type="email" id="emailRetype" class="form-control" placeholder="Re-type email address" >
-                <label type="password" class="sr-only">Password</label>
-                <input type="password" id="passwordInput" class="form-control" placeholder="Password" >
-                <label type="passwordRetype" class="sr-only">Re-type password</label>
-                <input type="password" id="passwordRetype" class="form-control" placeholder="Re-type password" >
+                <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" >
+                <label for="passwordInput" class="sr-only">Password</label>
+                <input type="password" id="passwordInput" name="passwordInput" class="form-control" placeholder="Password" >
+                <label for="passwordRetype"  class="sr-only">Re-type password</label>
+                <input type="password" id="passwordRetype" name="passwordRetype" class="form-control" placeholder="Re-type password" >
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Create new account</button>
 
             </form>

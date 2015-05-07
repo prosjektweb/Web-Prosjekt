@@ -91,6 +91,43 @@ class User {
         return null; //Return null in case of exception. Good night website
     }
 
+    static function registerUser($username, $email, $password) {
+        try {
+            $salt = User::rand_salt(16);
+            $group_id = "1";
+            $password = sha1($password . $salt);
+            $stmt = getDB()->prepare("INSERT INTO users (username, email, password, group_id, salt) VALUES(:username, :email, :password, :group_id, :salt)");
+            $stmt->execute(array(
+                "username" => $username,
+                "email" => $email,
+                "password" => $password,
+                "group_id" => $group_id,
+                "salt" => $salt
+            ));
+
+
+        } catch (Exception $ex) {
+            setSession("error", $ex->getMessage());
+        }
+        return null; //Return null in case of exception. Good night website
+
+    }
+    /*
+     * Make random salt value
+     */
+    static function rand_salt($length){
+        $salt = null;
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $size = strlen($chars);
+        for ($i = 0; $i < $length; $i++){
+            $salt .= $chars[rand(0, $size - 1)];
+        }
+        return $salt;
+    }
+
+    static function user_activation(){
+
+    }
 }
 
 ;
