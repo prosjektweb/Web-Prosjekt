@@ -91,6 +91,14 @@ class User {
         return null; //Return null in case of exception. Good night website
     }
 
+    /**
+     * @param $username
+     * @param $email
+     * @param $password
+     * @return null
+     *
+     * Function to register user.
+     */
     static function registerUser($username, $email, $password) {
         try {
             $salt = User::rand_salt(16);
@@ -112,9 +120,14 @@ class User {
         return null; //Return null in case of exception. Good night website
 
     }
-    /*
-     * Make random salt value
+
+    /**
+     * @param $length
+     * @return null|string
+     *
+     * Make random salt value for password protection
      */
+
     static function rand_salt($length){
         $salt = null;
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -125,9 +138,29 @@ class User {
         return $salt;
     }
 
-    static function user_activation(){
+    /**
+     * @param $email
+     * @param $username
+     *
+     * Use php mail() function. Guidelines found at www.w3schools.com
+     */
+
+    static function user_activation($email, $username){
+        $to = $email;
+        $subject = 'Verification of user';
+        $message = '
+        Thank you for signing up!
+        Your account has been created.
+
+        To log in you need to activate your account by clicking the following link:
+        http://http://kark.hin.no/~530321/Webutvikling/Web-utvikling%20Prosjekt/
+        '.$username.'
+
+        ';
+
 
     }
+
 }
 
 ;
