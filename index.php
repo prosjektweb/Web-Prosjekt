@@ -22,7 +22,7 @@ global $smarty;
 $smarty = new Smarty();
 
 //Options
-$smarty->debugging = true;
+$smarty->debugging = false;
 $smarty->caching = false;
 
 //Set some path urls because of mod rewrite
@@ -95,12 +95,12 @@ if (file_exists("./pages/$page")) {
 //Show home
 if (!$didInclude) {
 
-	//Main page
-	if($page == "" || $file == "") {
+    //Main page
+    if ($page == "" || $file == "") {
 
 
 
-        if(isset($_GET['month'])){
+        if (isset($_GET['month'])) {
             $posts = Post::getPosts();
             $smartyArchivedPosts = array();
 
@@ -119,10 +119,8 @@ if (!$didInclude) {
             $array = Archive::getMonthArray($smartyArchivedPosts, $_GET['month']);
             $smarty->assign("month", $array);
             $smarty->assign("archivedposts", $smartyArchivedPosts);
-            $smarty->assign("page", "blog_home.tpl");
-
-        }
-        else {
+            $smarty->assign("page", "blog/blog_home.tpl");
+        } else {
 
 
             //Display posts
@@ -171,17 +169,14 @@ if (!$didInclude) {
             $smarty->assign("archivedposts", $smartyArchivedPosts);
 
             $smarty->assign("posts", $smartyPosts);
-            $smarty->assign("page", "blog_home.tpl");
+            $smarty->assign("page", "blog/blog_home.tpl");
         }
-		
-	}
-
-    else {
-		//404
-	}
+    } else {
+        //404
+        $smarty->assign("page", "404.tpl");
+    }
 }
 //Allt annet
-
 //Assign user values last so that any session edits will be noticed
 $smarty->assign("user", array(
     "isAdmin" => "true",
