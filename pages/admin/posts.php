@@ -1,31 +1,8 @@
 <?php
 
-if (!isLoggedIn()) {
-    headerRedirect($ROOT_DIR . "/user/login");
-    return;
-}
-if (!isAdmin()) {
-    setSession("error", "Unauthorized.");
-    return;
-}
-
 global $smarty;
-$smarty->assign("body", "admin/body.tpl");
+$smarty->assign("sidebar1", "active");
 
-/*$smarty->assign("links", array(
-    "admin_posts" => makeLink("admin", "posts"),
-    "admin_users" => makeLink("admin", "users"),
-    "admin_configuration" => makeLink("admin", "configuration"),
-    "admin_posts_new" => makeLink("admin", "posts", array("new")),
-    "admin_post_new_submit" => makeLink("admin", "posts", array("new", "submit")),
-    "admin_posts_edit" => makeLink("admin", "posts", array("edit", "", "")),
-    "admin_posts_edit_submit" => makeLink("admin", "posts", array("edit", "submit", "")),
-    "admin_posts_delete" => makeLink("admin", "posts", array("delete", ""))
-));*/
-
-addLink("admin_posts", "admin", "posts");
-addLink("admin_users", "admin", "users");
-addLink("admin_configuration", "admin", "configuration");
 addLink("admin_posts_new", "admin", "posts", array("new"));
 addLink("admin_post_new_submit", "admin", "posts",  array("new", "submit"));
 addLink("admin_posts_edit", "admin", "posts", array("edit", "", ""));
