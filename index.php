@@ -14,6 +14,8 @@ require 'config.php';
 //Load SQL
 require 'modules/sql.php';
 
+require 'modules/Hitcount.class.php';
+
 //Create our Smarty object
 global $smarty;
 
@@ -105,6 +107,9 @@ if (!$didInclude) {
     }
 }
 //Allt annet
+//Logger hit på side
+Hitcount::doHitcount($page, $file);
+
 //Assign user values last so that any session edits will be noticed
 $smarty->assign("user", array(
     "isAdmin" => "true",
