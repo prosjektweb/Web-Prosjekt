@@ -7,14 +7,16 @@
 
     <div class="row">
         <div class="col-sm-8 blog-main">
-            <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="" method="POST">
+            <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.user_register}" method="POST">
                 <h2 class="form-signin-heading">Register: </h2>
                 <!--<span class="glyphicon-class">glyphicon glyphicon-envelop</span> -->
-                {if $loginStatus eq "error" }
-                    {foreach $errors as $error}
-                        <font color="red"><p>* {$error}</p></font>
-                    {/foreach}
-                {/if}
+                {if $loginStatus eq "success"}
+                <div class="alert alert-success" role="alert">
+                    <strong>Success!</strong> Your account has been created. You will receive a email shortly to activate your account.
+                </div>
+                {elseif $loginStatus eq "activated"}
+                    <strong>Success!</strong> Your account has been activated. You may now proceed to login.
+                {else}
                 <label for="usernameInput" class="sr-only">Username</label>
                 <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
                 <label for="emailInput" class="sr-only">Email address</label>
@@ -26,7 +28,12 @@
                 <label for="passwordRetype"  class="sr-only">Re-type password</label>
                 <input type="password" id="passwordRetype" name="passwordRetype" class="form-control" placeholder="Re-type password" >
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Create new account</button>
-
+                {if $loginStatus eq "error" }
+                    {foreach $errors as $error}
+                        <font color="red"><p>* {$error}</p></font>
+                    {/foreach}
+                {/if}
+                {/if}
             </form>
         </div>
         {include file='../sidebar.tpl'}
