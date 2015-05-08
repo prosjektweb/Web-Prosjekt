@@ -88,6 +88,12 @@ if ($_SETTINGS ['mod_rewrite']) {
 	}
 }
 
+// Assign path values for smarty
+$smarty->assign("path", array(
+		"page" => $page,
+		"file" => $file
+));
+
 // Attempt to navigate to the specified URL
 $didInclude = false;
 if (file_exists ( "./pages/$page" )) {
