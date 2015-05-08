@@ -158,12 +158,12 @@ class User {
         $to = $email;
         $subject = 'Verification of user';
         $message = '
-        Thank you for signing up!
+        Thank you for signing up! '.$username.'
         Your account has been created.
 
         To log in you need to activate your account by clicking the following link:
-        http://http://kark.hin.no/~530321/Webutvikling/Web-utvikling%20Prosjekt/'.$link.'
-        '.$username.'
+        '.$link.'
+
 
         ';
         mail($to, $subject, $message);
