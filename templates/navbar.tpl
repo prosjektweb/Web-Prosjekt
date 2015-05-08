@@ -12,8 +12,9 @@
                         <input type="password" placeholder="Password" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
-
+                    <a type="button" class="btn btn-success" href="{$links.user_register}" >Register</a>
                 </form>
+
             {else}
                 {if $user.isAdmin eq "true"}
                     <a class="blog-nav-item" href="{$links.admin_overview}">Admin</a>
