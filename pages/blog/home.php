@@ -1,4 +1,8 @@
 <?php
+$search = postFilter("search");
+if(isset($search)){
+    search();
+}
 if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyArchivedPosts = array ();

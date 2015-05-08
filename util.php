@@ -228,3 +228,8 @@ function postFilter($var) {
 		return "";
 	}
 }
+
+function search(){
+
+    return makeLink("", "", array(postFilter("search")));
+}
