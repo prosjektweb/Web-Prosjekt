@@ -35,6 +35,8 @@ if (hasPost ( "username" ) || hasPost ( "password" )) {
 			} else {
 				setSession ( "userId", $user->getId () );
 				setSession ( "user", $user );
+				setSession("username", $user->getUsername());
+				setSession("group_id", $user->getGroupId());
 				$status = "success";
 			}
 		} else {

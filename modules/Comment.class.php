@@ -94,10 +94,9 @@ class Comment {
 	 * @param unknown $poster        	
 	 * @return Comment|NULL
 	 */
-	static function newComment($post_id, $title, $content, $poster) {
+	static function newComment($post_id, $content, $poster) {
 		$comment = new Comment ();
 		$comment->post_id = $post_id;
-		$comment->title = $title;
 		$comment->content = $content;
 		$comment->poster = $poster;
 		
@@ -105,11 +104,11 @@ class Comment {
 		try {
 			$stmt = getDB ()->prepare ( "INSERT INTO comments (post_id, content, post_date, poster) VALUES(:post_id, :content, NOW(), :poster)" );
 			$stmt->execute ( array (
-					"id" => $post_id,
+					"post_id" => $post_id,
 					"content" => $content,
 					"poster" => $poster 
 			) );
-			$this->id = getDB ()->lastInsertId ();
+			$comment->id = getDB ()->lastInsertId ();
 			return $comment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -154,12 +153,10 @@ class Comment {
 			if (! $stmt->execute ( array (
 					"id" => $id 
 			) )) {
-				echo "cmt err";
 				return null;
 			}
 			$comment = $stmt->fetchObject ( "Comment" );
-			
-			echo $stmt->rowCount();
+
 			if ($comment) {
 				return $comment;
 			} else {
