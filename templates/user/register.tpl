@@ -14,8 +14,6 @@
                 <div class="alert alert-success" role="alert">
                     <strong>Success!</strong> Your account has been created. You will receive a email shortly to activate your account.
                 </div>
-                {elseif $loginStatus eq "activated"}
-                    <strong>Success!</strong> Your account has been activated. You may now proceed to login.
                 {else}
                 <label for="usernameInput" class="sr-only">Username</label>
                 <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>

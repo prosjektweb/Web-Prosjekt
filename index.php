@@ -45,6 +45,7 @@ addLink ( "admin_overview", "admin", "overview" );
 addLink ( "post_view", "blog", "view" );
 addLink ( "view_archive", "", "" );
 addLink ( "user_register", "user", "register");
+addLink ( "verify_user", "user", "verify");
 
 $page = "";
 $file = "";
