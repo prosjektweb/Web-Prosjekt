@@ -8,11 +8,13 @@
         {if isset($archivedposts)}
             <h4>Archives</h4>
             <ol class="list-unstyled">
+                {foreach $years as $year}
+                    {$yearval = array_search($year, $years)}
+                    {foreach $year as $month}
 
-                {foreach $months as $month}
+                        <li><a href="{makeLink("", "", array($month, $yearval) )}">{Archive::monthNumberToString($month)} {$yearval}</a></li>
 
-                    <li><a href="{$links.view_archive}&month={$month}">{Archive::monthNumberToString($month)}</a></li>
-
+                    {/foreach}
                 {/foreach}
 
             </ol>

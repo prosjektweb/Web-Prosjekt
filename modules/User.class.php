@@ -1,5 +1,10 @@
 <?php
 
+class Rights
+{
+	
+}
+
 class User {
 
     var $id;

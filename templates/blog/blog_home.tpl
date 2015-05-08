@@ -10,8 +10,8 @@
         <div class="col-sm-8 blog-main">
 
             {strip}
-                {if isset($smarty.get.month)}
-                    <h1>Arkiverte poster for {Archive::monthNumberToString($smarty.get.month)}</h1>
+                {if hasArg(0)}
+                    <h2 class="blog-post-title">Arkiverte poster for {Archive::monthNumberToString(getArg(0))} {getArg(1)}</h2><hr>
                     {foreach $month as $post}
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>

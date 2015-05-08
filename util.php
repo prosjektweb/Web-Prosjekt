@@ -1,7 +1,13 @@
 <?php
 global $links;
 
-// $years, $year
+/**
+ * Check if the given array has the given key
+ *
+ * @param unknown $array        	
+ * @param unknown $key        	
+ * @return boolean
+ */
 function array_has_key($array, $key) {
 	$keys = array_keys ( $array );
 	for($i = 0; $i < sizeof ( $keys ); $i ++) {
@@ -49,7 +55,18 @@ function makeLink($page, $file, $vars = null) {
 }
 
 /**
- *
+ * Check if we have the given argument
+ * 
+ * @param unknown $index        	
+ * @return type
+ */
+function hasArg($index) {
+	return hasSession ( "arg" . $index );
+}
+
+/**
+ * Get the given argument
+ * 
  * @param type $index        	
  * @return type
  */
@@ -85,7 +102,10 @@ function isLoggedIn() {
  * @return type
  */
 function isAdmin() {
-	return isLoggedIn ();
+	if (! isLoggedIn ()) {
+		return false;
+	}
+	return session ( "user" )->group_id == 1;
 }
 
 /**

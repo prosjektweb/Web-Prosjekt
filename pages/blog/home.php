@@ -1,10 +1,10 @@
 <?php
 
-if (isset($_GET['month'])) {
+if (isset($_GET['arg0'])) {
     $posts = Post::getPosts();
     $smartyArchivedPosts = array();
 
-    for ($i = 5; $i < sizeof($posts); $i++) {
+    for ($i = 1; $i < sizeof($posts); $i++) {
         $post = $posts[$i];
         $smartyArchivedPosts[] = array(
             "id" => $post->getId(),
@@ -16,10 +16,9 @@ if (isset($_GET['month'])) {
     }
     Archive::setMonths($smartyArchivedPosts);
 
-    $array = Archive::getMonthArray($smartyArchivedPosts, $_GET['month']);
+    $array = Archive::getMonthArray($smartyArchivedPosts, $_GET['arg0']);
     $smarty->assign("month", $array);
-    $smarty->assign("archivedposts", $smartyArchivedPosts);
-    $smarty->assign("page", "blog/blog_home.tpl");
+
 } else {
 
 
@@ -53,7 +52,7 @@ if (isset($_GET['month'])) {
 
     if ($archivePosts) {
 
-        for ($i = 5; $i < sizeof($posts); $i++) {
+        for ($i = 0; $i < sizeof($posts); $i++) {
             $post = $posts[$i];
             $smartyArchivedPosts[] = array(
                 "id" => $post->getId(),
@@ -66,8 +65,8 @@ if (isset($_GET['month'])) {
 
         Archive::setMonths($smartyArchivedPosts);
     }
-    $smarty->assign("archivedposts", $smartyArchivedPosts);
 
     $smarty->assign("posts", $smartyPosts);
-    $smarty->assign("page", "blog/blog_home.tpl");
 }
+$smarty->assign("archivedposts", $smartyArchivedPosts);
+$smarty->assign("page", "blog/blog_home.tpl");
