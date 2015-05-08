@@ -59,7 +59,7 @@ class Post {
 	/**
 	 */
 	function getCommentCount() {
-		if ($comment_count == null) {
+		if ($this->comment_count == null) {
 			// Fetch comment count
 			$this->comment_count = Comment::countComments ( $this->id );
 		}
