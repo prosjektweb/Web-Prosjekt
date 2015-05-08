@@ -14,6 +14,33 @@ class Hitcount {
 
     }
 
+    static function getHitcount($page, $file){
+
+        if(hitcount::siteExsist($page, $file)){
+
+            $stmt = getDB()->prepare("SELECT * FROM Pages WHERE page=:page and file=:file;");
+            $stmt->execute(array(
+                "page" => $page,
+                "file" => $file
+            ));
+
+            return $stmt->fetch()["hit_count"];
+        }
+        else{
+            hitcount::addSite($page, $file);
+
+            $stmt = getDB()->prepare("SELECT * FROM Pages WHERE page=:page and file=:file;");
+            $stmt->execute(array(
+                "page" => $page,
+                "file" => $file
+            ));
+
+            return $stmt->fetch()["hit_count"];
+        }
+
+
+    }
+
     private static function addSite($page, $file){
         $stmt = getDB()->prepare("INSERT INTO Pages (page, file, hit_count) VALUES (:page, :file, '0')");
         $stmt->execute(array(
@@ -23,36 +50,29 @@ class Hitcount {
     }
 
     private static function increaseCount($page, $file){
-        $stmt = getDB()->prepare("SELECT hit_count FROM Pages where page=:page and file=:file");
+
+        $stmt = getDB()->prepare("UPDATE Pages SET hit_count = Pages.hit_count + 1 where page=:page and file=:file");
         $stmt->execute(array(
             "page" => $page,
             "file" => $file
         ));
-
-        $hitcount = $stmt->fetch()["hit_count"] + 1;
-
-        $stmt = getDB()->prepare("UPDATE Pages SET hit_count=:hitcount WHERE page=:page and file=:file;");
-        $stmt->execute(array(
-            "page" => $page,
-            "file" => $file,
-            "hitcount" => $hitcount
-        ));
-
 
     }
 
     private static function siteExsist($page, $file){
-        $stmt = getDB()->prepare("SELECT * FROM Pages where WHERE page=:page and file=:file;");
+        $stmt = getDB()->prepare("SELECT * FROM Pages WHERE page=:page and file=:file;");
         $stmt->execute(array(
             "page" => $page,
             "file" => $file
         ));
 
-        if($stmt->fetch() == false){
-            return false;
+        $hitcount = $stmt->fetch()["hit_count"];
+
+        if(isset($hitcount)){
+            return true;
         }
         else{
-            return true;
+            return false;
         }
     }
 }
