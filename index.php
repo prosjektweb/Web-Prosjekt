@@ -1,7 +1,4 @@
 <?php
-
-//UPDATE Pages SET hit_count = Pages.hit_count + 1 WHERE page = 'admin'
-
 session_start ();
 // Utilities
 include ("util.php");
@@ -16,13 +13,15 @@ require 'config.php';
 // Load SQL
 require 'modules/sql.php';
 
+require 'modules/Hitcount.class.php';
+
 // Create our Smarty object
 global $smarty;
 
 $smarty = new Smarty ();
 
 // Options
-$smarty->debugging = true;
+$smarty->debugging = false;
 $smarty->caching = false;
 
 // Set some path urls because of mod rewrite
@@ -120,6 +119,11 @@ if (! $didInclude) {
 	}
 }
 // Allt annet
+//running hit counter
+Hitcount::doHitcount($page,$file);
+$hits = Hitcount::getHitcount($page, $file);
+$smarty->assign("hits", $hits);
+
 // Assign user values last so that any session edits will be noticed
 $smarty->assign ( "user", array (
 		"isAdmin" => "true",
