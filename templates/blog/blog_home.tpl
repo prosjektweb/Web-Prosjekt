@@ -28,7 +28,7 @@
                         </div>
                         
                         <p class="blog-post-meta">
-							- {$post.comments} Comments
+							- {$post.numcomments} comments
 						</p>		
                     {/foreach}
                 {/if}

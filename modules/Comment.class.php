@@ -50,6 +50,25 @@ class Comment {
 	}
 	
 	/**
+	 * Count the comments of a post
+	 *
+	 * @param unknown $post_id        	
+	 * @return string|number
+	 */
+	static function countComments($post_id) {
+		try {
+			$stmt = getDB ()->prepare ( "SELECT COUNT(*) FROM comments WHERE post_id= ?" );
+			$stmt->bindParam ( 1, $post_id );
+			$stmt->execute ();
+			$count = $stmt->fetchColumn ( 0 );
+			return $count; // Fetch first column
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return - 1;
+	}
+	
+	/**
 	 * Removes the comment with the specified id
 	 *
 	 * @param unknown $id        	
@@ -100,34 +119,47 @@ class Comment {
 	
 	/**
 	 * Load the comments from the specified post
-	 * 
+	 *
 	 * @param unknown $post_id        	
 	 * @return multitype:unknown
 	 */
 	static function loadComments($post_id) {
-		$stmt = getDB ()->prepare ( "SELECT * FROM comments WHERE post_id= ?" );
-		$stmt->bindParam ( 1, $post_id );
-		$result = $stmt->execute ();
-		$posts = array ();
-		while ( $post = $result->fetchObject ( 'Comment' ) ) {
-			$posts [] = $post;
+		try {
+			$stmt = getDB ()->prepare ( "SELECT * FROM comments WHERE post_id= :post_id" );
+			if (! $stmt->execute ( array (
+					"post_id" => $post_id 
+			) )) {
+				return array ();
+			}
+			$posts = array ();
+			while ( $post = $stmt->fetchObject ( 'Comment' ) ) {
+				$posts [] = $post;
+			}
+			return $posts;
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
 		}
-		return $posts;
+		return array ();
 	}
 	
 	/**
 	 * Load the comment witht the specified id
-	 * 
+	 *
 	 * @param unknown $id        	
 	 * @return mixed|NULL
 	 */
 	static function loadComment($id) {
 		try {
-			$stmt = getDB ()->prepare ( "SELECT * FROM comments WHERE id= ?" );
-			$stmt->bindParam ( 1, $id );
-			$stmt->execute ();
-			
+			$stmt = getDB ()->prepare ( "SELECT * FROM comments WHERE id= :id" );
+			if (! $stmt->execute ( array (
+					"id" => $id 
+			) )) {
+				echo "cmt err";
+				return null;
+			}
 			$comment = $stmt->fetchObject ( "Comment" );
+			
+			echo $stmt->rowCount();
 			if ($comment) {
 				return $comment;
 			} else {

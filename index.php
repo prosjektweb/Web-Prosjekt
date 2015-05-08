@@ -44,8 +44,8 @@ addLink ( "user_logout", "user", "logout" );
 addLink ( "admin_overview", "admin", "overview" );
 addLink ( "post_view", "blog", "view" );
 addLink ( "view_archive", "", "" );
-addLink ( "user_register", "user", "register");
-addLink ( "verify_user", "user", "verify");
+addLink ( "user_register", "user", "register" );
+addLink ( "verify_user", "user", "verify" );
 
 $page = "";
 $file = "";
@@ -89,10 +89,10 @@ if ($_SETTINGS ['mod_rewrite']) {
 }
 
 // Assign path values for smarty
-$smarty->assign("path", array(
+$smarty->assign ( "path", array (
 		"page" => $page,
-		"file" => $file
-));
+		"file" => $file 
+) );
 
 // Attempt to navigate to the specified URL
 $didInclude = false;

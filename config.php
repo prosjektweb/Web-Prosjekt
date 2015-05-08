@@ -1,10 +1,10 @@
 <?php
 
-$SQL_SERVER = "217.170.207.75";
-$SQL_USERNAME = "webprosjekt";
-$SQL_PASSWORD = "webprosjekt2015";
-$SQL_DATABASE = "webprosjekt";
-$ROOT_DIR = "http://localhost/Web-Prosjekt";
+$SQL_SERVER = "127.0.0.1";
+$SQL_USERNAME = "evensen";
+$SQL_PASSWORD = "evensen";
+$SQL_DATABASE = "stud_v15_evensen";
+$ROOT_DIR = "http://kark.hin.no/~501669/prosjekt/web";
 
 $_SETTINGS = array(
     "title" => "Prosjekt Webutvikling",
