@@ -1,0 +1,11 @@
+/**
+ * 
+ */
+
+
+function loadComments(var post)
+{
+
+	
+
+}

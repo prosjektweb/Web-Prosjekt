@@ -1,4 +1,7 @@
 <?php
+
+//UPDATE Pages SET hit_count = Pages.hit_count + 1 WHERE page = 'admin'
+
 session_start ();
 // Utilities
 include ("util.php");
