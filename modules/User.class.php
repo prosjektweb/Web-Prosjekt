@@ -90,17 +90,24 @@ class User {
 	 *        	$email
 	 * @param
 	 *        	$password
-	 * @return null Function to register user.
+	 * @return null
+     *
+     * Function to register user.
 	 */
 	static function registerUser($username, $email, $password) {
 		try {
+            // Make activation key with rand_salt function
 			$activationKey = User::rand_salt ( 20 );
+            // Create a link for the user to press.
 			$link = makeLink ( "user", "verify_user", array (
 					$username,
 					$activationKey 
 			) );
+            // Create salt for password protection
 			$salt = User::rand_salt ( 16 );
+            // Set default group_id. User
 			$group_id = "2";
+            // Encrypt password with sha1.
 			$password = sha1 ( $password . $salt );
 			$stmt = getDB ()->prepare ( "INSERT INTO users (username, email, password, group_id, activationKey, salt) VALUES(:username, :email, :password, :group_id, :activationKey, :salt)" );
 			$stmt->execute ( array (
@@ -124,7 +131,8 @@ class User {
 	 *
 	 * @param
 	 *        	$length
-	 * @return null|string Make random salt value for password protection
+	 * @return null|string
+     * Generate random salt value for password protection / activation key / forgotten password key
 	 */
 	static function rand_salt($length) {
 		$salt = null;
@@ -157,6 +165,12 @@ class User {
         ';
 		mail ( $to, $subject, $message );
 	}
+
+    /**
+     * @param $username
+     * @return null
+     * Get activation key from username
+     */
 	static function getActivationKeyByUsername($username) {
 		try {
 			$stmt = getDB ()->prepare ( "SELECT activationKey FROM users WHERE username = ?" );
@@ -169,6 +183,12 @@ class User {
 		}
 		return null; // Return null in case of exception. Good night website
 	}
+
+    /**
+     * @param $username
+     * Activate users account
+     * Set activationKey field in table to null.
+     */
 	static function activate_account($username) {
 		try {
 			
