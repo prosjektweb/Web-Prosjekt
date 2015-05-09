@@ -95,7 +95,7 @@ class User {
 	static function registerUser($username, $email, $password) {
 		try {
 			$activationKey = User::rand_salt ( 20 );
-			$link = makeLink ( "user", "verify.php", array (
+			$link = makeLink ( "user", "verify_user", array (
 					$username,
 					$activationKey 
 			) );
@@ -141,7 +141,7 @@ class User {
 	 * @param
 	 *        	$email
 	 * @param $username Use
-	 *        	php mail() function. Guidelines found at www.w3schools.com
+	 *        	php mail() function.
 	 */
 	static function user_activation($email, $username, $link) {
 		$to = $email;
@@ -151,7 +151,7 @@ class User {
         Your account has been created.
 
         To log in you need to activate your account by clicking the following link:
-        ' . $link . '
+        http://kark.hin.no/~501669/prosjekt/web/' . $link . '
 
 
         ';
