@@ -48,7 +48,7 @@ if(isset($params['usernameInput']) || isset($params['emailInput']) || isset($par
     if ($params['passwordInput'] != $params['passwordRetype']){
         $errors[] = "Passwords do not match.";
     }
-    if (sizeof($params['passwordInput']) < 8){
+    if (strlen($params['passwordInput']) < 8){
         $errors[] = "Password too short";
     }
     $status = "error";
