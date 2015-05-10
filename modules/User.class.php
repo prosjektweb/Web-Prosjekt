@@ -149,13 +149,14 @@ class User {
 	 * @param
 	 *        	$email
 	 * @param $username Use
-	 *        	php mail() function.
+	 *
+     * Send mail for user to activate their account.
 	 */
 	static function user_activation($email, $username, $link) {
 		$to = $email;
 		$subject = 'Verification of user';
 		$message = '
-        Thank you for signing up! ' . $username . '
+        Thank you for signing up, ' . $username . '!
         Your account has been created.
 
         To log in you need to activate your account by clicking the following link:
@@ -167,8 +168,53 @@ class User {
 	}
 
     /**
+     * @param $email
+     * @param $username
+     * @param $link
+     *
+     * Send mail for user to change their password.
+     */
+    static function forgotkey_mail($email, $username, $link) {
+        $to = $email;
+        $subject = 'Change password.';
+        $message = '
+        You have asked to be able create a new password! ' . $username . '
+        If you did not request this, you may disregard this email.
+
+        You may create a new password by clicking the following link:
+        http://kark.hin.no/~501669/prosjekt/web/' . $link . '
+
+
+        ';
+        mail ( $to, $subject, $message );
+    }
+
+    /**
+     * @param $email
+     * @param $username
+     *
+     * Send confirmation mail for changed password.
+     */
+    static function confirm_password_change($email, $username) {
+        $to = $email;
+        $subject = 'Password changed.';
+        $message = '
+
+        Hey, ' . $username . '!
+        Your password has been updated.
+
+        You may now proceed to log in.
+
+
+
+        ';
+        mail ( $to, $subject, $message );
+    }
+
+    /**
      * @param $username
      * @return null
+     *
      * Get activation key from username
      */
 	static function getActivationKeyByUsername($username) {
@@ -187,6 +233,7 @@ class User {
     /**
      * @param $username
      * Activate users account
+     *
      * Set activationKey field in table to null.
      */
 	static function activate_account($username) {
@@ -199,6 +246,123 @@ class User {
 			setSession ( "error", $ex->getMessage () );
 		}
 	}
+
+    /**
+     * @param $email
+     * @return mixed|null
+     *
+     * Return number of users in the database with this email address.
+     */
+    static function emailExist($email){
+        try {
+
+            $stmt = getDB()->prepare("SELECT count(*) FROM users WHERE email = ?");
+            $stmt->bindParam (1, $email);
+            $stmt->execute();
+            $fetch = $stmt->fetch();
+            return $fetch;
+        } catch (Exception $ex) {
+            setSession ( "error", $ex->getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * @param $username
+     * @return mixed|null
+     *
+     * Return number of users in the database with this username.
+     */
+    static function userExist($username){
+        try {
+
+            $stmt = getDB()->prepare("SELECT count(*) FROM users WHERE username = ?");
+            $stmt->bindParam (1, $username);
+            $stmt->execute();
+            $fetch = $stmt->fetch();
+            return $fetch;
+        } catch (Exception $ex) {
+            setSession ( "error", $ex->getMessage());
+        }
+        return null;
+
+
+    }
+
+    /**
+     * @param $email
+     * @return null
+     *
+     * Get forgotkey from database by email
+     */
+    static function getForgotkeyByEmail($email) {
+        try {
+            $stmt = getDB ()->prepare ( "SELECT forgotkey FROM users WHERE email = ?" );
+            $stmt->bindParam ( 1, $email );
+            $stmt->execute ();
+            $fetch = $stmt->fetch ();
+            return $fetch ["forgotkey"];
+        } catch ( Exception $ex ) {
+            setSession ( "error", $ex->getMessage () );
+        }
+        return null; // Return null in case of exception. Good night website
+    }
+
+    /**
+     * @param $email
+     * @return null
+     *
+     * Get username from database by using email address.
+     */
+    static function getUsernameByEmail($email) {
+        try {
+            $stmt = getDB ()->prepare ( "SELECT username FROM users WHERE email = ?" );
+            $stmt->bindParam ( 1, $email );
+            $stmt->execute ();
+            $fetch = $stmt->fetch ();
+            return $fetch ["username"];
+        } catch ( Exception $ex ) {
+            setSession ( "error", $ex->getMessage () );
+        }
+        return null; // Return null in case of exception. Good night website
+    }
+
+    /**
+     * @param $username
+     * @param $forgotkey
+     *
+     * Update forgotkey on user.
+     */
+    static function update_forgotkey($username, $forgotkey) {
+        try {
+
+            $stmt = getDB ()->prepare ( "UPDATE users SET forgotkey = :forgotkey WHERE username = :username");
+            $stmt->execute ( array (
+                "forgotkey" => $forgotkey,
+                "username" => $username
+            ) );
+        } catch ( Exception $ex ) {
+            setSession ( "error", $ex->getMessage () );
+        }
+    }
+    static function update_password($username, $password) {
+        try {
+
+            // Create salt for password protection
+            $salt = User::rand_salt ( 16 );
+
+            // Encrypt password with sha1.
+            $password = sha1 ( $password . $salt );
+            $stmt = getDB ()->prepare ( "UPDATE users SET password = :password, salt = :salt WHERE username = :username");
+            $stmt->execute ( array (
+                "password" => $password,
+                "salt" => $salt,
+                "username" => $username
+            ) );
+        } catch ( Exception $ex ) {
+            setSession ( "error", $ex->getMessage () );
+        }
+    }
 }
 
 ;
