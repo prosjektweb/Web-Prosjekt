@@ -24,12 +24,15 @@ if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyPosts = array ();
 	$smartyArchivedPosts = array ();
+    $searchResult = array();
+    $search = false;
 	
 	$postCount;
 	$archivePosts = false;
 
     if(hasPost("search")){
-        $posts = search($posts);
+        $search = true;
+        $searchResult = search($posts);
     }
 
 	if (sizeof ( $posts ) > 5) {
@@ -41,19 +44,37 @@ if (isset ( $_GET ['arg0'] )) {
 		$postCount = sizeof ( $posts );
 	}
 
+    if($search){
 
-	for($i = 0; $i < $postCount; $i ++) {
-		$post = $posts [$i];
-		$smartyPosts [] = array (
-				"id" => $post->getId (),
-				"poster" => User::getUsernameById ( $post->getPoster () ),
-				"postdate" => $post->getPostDate (),
-				"title" => $post->getTitle (),
-				"content" => $post->getContent (),
-				"numcomments" => $post->getCommentCount () 
-		);
-	}
-	
+        for ($i = 0; $i < sizeof ( $searchResult ); $i++) {
+            $post = $searchResult [$i];
+            $smartyPosts [] = array(
+                "id" => $post->getId(),
+                "poster" => User::getUsernameById($post->getPoster()),
+                "postdate" => $post->getPostDate(),
+                "title" => $post->getTitle(),
+                "content" => $post->getContent(),
+                "numcomments" => $post->getCommentCount()
+            );
+        }
+    }
+    else {
+
+
+        for ($i = 0; $i < $postCount; $i++) {
+            $post = $posts [$i];
+            $smartyPosts [] = array(
+                "id" => $post->getId(),
+                "poster" => User::getUsernameById($post->getPoster()),
+                "postdate" => $post->getPostDate(),
+                "title" => $post->getTitle(),
+                "content" => $post->getContent(),
+                "numcomments" => $post->getCommentCount()
+            );
+        }
+
+    }
+
 	if ($archivePosts) {
 		
 		for($i = 0; $i < sizeof ( $posts ); $i ++) {
