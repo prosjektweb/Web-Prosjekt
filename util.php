@@ -302,7 +302,17 @@ function get_time_ago_string($time_stamp, $divisor, $time_unit) {
 	}
 }
 
-function search(){
+function search($posts){
 
-    return makeLink("", "", array(postFilter("search")));
+    $search = array();
+
+    for($i = 0; $i  < sizeof ( $posts ); $i ++) {
+        $post = $posts [$i];
+
+        if(strripos($post->getTitle(), postFilter("search")) === 0 || strripos($post->getContent(), postFilter("search")) === 0){
+            $search [] = $post;
+        }
+    }
+
+    return $search;
 }

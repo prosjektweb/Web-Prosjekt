@@ -1,12 +1,8 @@
 <?php
-$search = postFilter("search");
-if(isset($search)){
-    search();
-}
 if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyArchivedPosts = array ();
-	
+
 	for($i = 1; $i < sizeof ( $posts ); $i ++) {
 		$post = $posts [$i];
 		$smartyArchivedPosts [] = array (
@@ -31,7 +27,11 @@ if (isset ( $_GET ['arg0'] )) {
 	
 	$postCount;
 	$archivePosts = false;
-	
+
+    if(hasPost("search")){
+        $posts = search($posts);
+    }
+
 	if (sizeof ( $posts ) > 5) {
 		$postCount = 5;
 		$archivePosts = true;
@@ -40,7 +40,8 @@ if (isset ( $_GET ['arg0'] )) {
 	} else {
 		$postCount = sizeof ( $posts );
 	}
-	
+
+
 	for($i = 0; $i < $postCount; $i ++) {
 		$post = $posts [$i];
 		$smartyPosts [] = array (
