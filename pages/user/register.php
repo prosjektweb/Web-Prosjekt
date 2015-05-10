@@ -12,11 +12,11 @@ $smarty->assign("page", "user/register.tpl");
 
 // Check if any form values are assigned
 $params = array(
-    "usernameInput" => $_POST["usernameInput"],
-    "emailInput" => $_POST["emailInput"],
-    "emailRetype" => $_POST["emailRetype"],
-    "passwordInput" => $_POST["passwordInput"],
-    "passwordRetype" => $_POST["passwordRetype"]
+    "usernameInput" => postFilter("usernameInput"),
+    "emailInput" => postFilter("emailInput"),
+    "emailRetype" => postFilter("emailRetype"),
+    "passwordInput" => postFilter("passwordInput"),
+    "passwordRetype" => postFilter("passwordRetype")
 );
 
 // for status message
@@ -24,8 +24,8 @@ $error = array();
 $status = "";
 
 // Check if any params is set.
-if(isset($params['usernameInput']) || isset($params['emailInput']) || isset($params['emailRetype']) ||
-    isset($params['passwordInput']) || isset($params['passwordRetype']))
+if(hasPost ( "username" ) || hasPost ( "emailInput" ) || hasPost ( "emailRetype" ) ||
+    hasPost ( "passwordInput" ) || hasPost ( "passwordRetype" ))
 {
     // Perform error check
     $params ['usernameInput'] = trim ( $params ['usernameInput'] );
@@ -56,10 +56,13 @@ if(isset($params['usernameInput']) || isset($params['emailInput']) || isset($par
         $error[] = "Email addresses do not match.";
     }
     if ($params['passwordInput'] != $params['passwordRetype']){
-        $errors[] = "Passwords do not match.";
+        $error[] = "Passwords do not match.";
     }
     if (strlen($params['passwordInput']) < 8){
-        $errors[] = "Password too short";
+        $error[] = "Password too short.";
+    }
+    if (User::emailExist($params['emailInput']) >= 1){
+        $error[] = "Email address already in use.";
     }
     $status = "error";
 

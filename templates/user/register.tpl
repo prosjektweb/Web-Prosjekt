@@ -14,13 +14,14 @@
                 </div>
             {else}
             <div class="well">
+                <h2 class="form-signin-heading">Register: </h2>
+                {if $loginStatus eq "error" }
+                    {foreach $errors as $error}
+                        <font color="red"><p>* {$error}</p></font>
+                    {/foreach}
+                {/if}
                 <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.user_register}" method="POST">
-                    <h2 class="form-signin-heading">Register: </h2>
-                    {if $loginStatus eq "error" }
-                        {foreach $errors as $error}
-                            <font color="red"><p>* {$error}</p></font>
-                        {/foreach}
-                    {/if}
+
                     <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
                     <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" >
                     <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" >
