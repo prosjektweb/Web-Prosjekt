@@ -27,8 +27,8 @@
                             {$post.content}
                         </div>
                         
-                        <p class="blog-post-meta">
-							- {$post.comments} Comments
+                        <p id="post-{$post.id}-comments" class="blog-post-meta">
+							- <a href="javascript:loadComments('{$root}/ajax/comment/list.php?post_id={$post.id}', {$post.id})">{$post.numcomments} comments</a>
 						</p>		
                     {/foreach}
                 {/if}

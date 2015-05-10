@@ -13,13 +13,15 @@ require 'config.php';
 // Load SQL
 require 'modules/sql.php';
 
+require 'modules/Hitcount.class.php';
+
 // Create our Smarty object
 global $smarty;
 
 $smarty = new Smarty ();
 
 // Options
-$smarty->debugging = true;
+$smarty->debugging = false;
 $smarty->caching = false;
 
 // Set some path urls because of mod rewrite
@@ -44,8 +46,9 @@ addLink ( "user_logout", "user", "logout" );
 addLink ( "admin_overview", "admin", "overview" );
 addLink ( "post_view", "blog", "view" );
 addLink ( "view_archive", "", "" );
-addLink ( "user_register", "user", "register");
-addLink ( "verify_user", "user", "verify");
+addLink ( "user_register", "user", "register" );
+addLink ( "verify_user", "user", "verify" );
+addLink ( "new_password", "user", "new_password");
 
 $page = "";
 $file = "";
@@ -88,6 +91,12 @@ if ($_SETTINGS ['mod_rewrite']) {
 	}
 }
 
+// Assign path values for smarty
+$smarty->assign ( "path", array (
+		"page" => $page,
+		"file" => $file 
+) );
+
 // Attempt to navigate to the specified URL
 $didInclude = false;
 if (file_exists ( "./pages/$page" )) {
@@ -111,6 +120,11 @@ if (! $didInclude) {
 	}
 }
 // Allt annet
+//running hit counter
+Hitcount::doHitcount($page,$file);
+$hits = Hitcount::getHitcount($page, $file);
+$smarty->assign("hits", $hits);
+
 // Assign user values last so that any session edits will be noticed
 $smarty->assign ( "user", array (
 		"isAdmin" => "true",

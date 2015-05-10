@@ -3,6 +3,7 @@
         <nav class="blog-nav">
             <a class="blog-nav-item active" href="{$root}/">Home</a>
             <a class="blog-nav-item" href="#">About</a>
+
             {if $user.isSignedIn eq "false"}
                 <form class="navbar-form navbar-right" action="{$links.user_login}" method="POST">
                     <div class="form-group">
@@ -26,6 +27,10 @@
                     Hello {$user.displayName|capitalize}. 
                 </div>
             {/if}
+
+            <form  class="navbar-form navbar-right" action="" method="POST">
+                <input type="text" class="form-control" placeholder="Søk..." name="search">
+            </form>
         </nav>
     </div>
 </div>

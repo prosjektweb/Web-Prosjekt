@@ -1,11 +1,10 @@
 <?php
+require dirname ( __FILE__ ) . "/" . 'User.class.php';
 
-require 'User.class.php';
+require dirname ( __FILE__ ) . "/" . 'Attachment.class.php';
 
-require 'Attachment.class.php';
+require dirname ( __FILE__ ) . "/" . 'Archive.class.php';
 
-require 'Archive.class.php';
+require dirname ( __FILE__ ) . "/" . 'Comment.class.php';
 
-require 'Comment.class.php';
-
-require 'Post.class.php';
+require dirname ( __FILE__ ) . "/" . 'Post.class.php';
