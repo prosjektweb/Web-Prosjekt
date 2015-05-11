@@ -7,20 +7,22 @@
 
     <div class="row">
         <div class="col-sm-8 blog-main">
-            <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.forgotten_password}" method="POST">
-                <h2 class="form-signin-heading">Register: </h2>
-                <!--<span class="glyphicon-class">glyphicon glyphicon-envelop</span> -->
+            <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.new_password}" method="POST">
+                {if $loginStatus eq "invalid" }
+                    {foreach $errors as $error}
+                        <font color="red"><p>* {$error}</p></font>
+                    {/foreach}
+                {else}
+                <h2 class="form-signin-heading">Change password: </h2>
                 {if $loginStatus eq "success"}
                     <div class="alert alert-success" role="alert">
-                        <strong>Success!</strong> Your account has been created. You will receive a email shortly to activate your account.
+                        <strong>Success!</strong> Your password has been changed.
                     </div>
                 {else}
                     <label for="usernameInput" class="sr-only">Username</label>
-                    <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" >
+                    <input type="text" value="{$params['username']}" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" disabled>
                     <label for="emailInput" class="sr-only">Email address</label>
-                    <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" >
-                    <label for="emailRetype" class="sr-only">Re-type email address</label>
-                    <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" >
+                    <input type="email" value="{$params['email']}" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" disabled>
                     <label for="passwordInput" class="sr-only">Password</label>
                     <input type="password" id="passwordInput" name="passwordInput" class="form-control" placeholder="Password" required autofocus>
                     <label for="passwordRetype"  class="sr-only">Re-type password</label>
@@ -32,6 +34,8 @@
                         {/foreach}
                     {/if}
                 {/if}
+                {/if}
+
             </form>
         </div>
         {include file='../sidebar.tpl'}

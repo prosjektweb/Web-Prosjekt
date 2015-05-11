@@ -57,7 +57,7 @@ if ($params ['forgotkey'] == $serverActivationKey) {
 	}
 } else {
 	$error = "Link is used or invalid.";
-	$status = "error";
+	$status = "invalid";
 }
 
 $smarty->assign ( "loginStatus", $status );

@@ -171,7 +171,7 @@ class User {
         Your account has been created.
 
         To log in you need to activate your account by clicking the following link:
-        http://kark.hin.no/~501669/prosjekt/web/' . $link . '
+        ' . $link . '
 
 
         ';
@@ -195,7 +195,7 @@ class User {
         If you did not request this, you may disregard this email.
 
         You may create a new password by clicking the following link:
-        http://kark.hin.no/~501669/prosjekt/web/' . $link . '
+        ' . $link . '
 
 
         ';
