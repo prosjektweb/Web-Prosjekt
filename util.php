@@ -2,6 +2,15 @@
 global $links;
 
 /**
+ * Filter 
+ * @param unknown $str
+ * @return mixed
+ */
+function str_filter_only_alpha($str) {
+	return preg_replace ( "/[^a-z0-9]+/i", "", $str );
+}
+
+/**
  * Searched the given string for the given string ignoring case sensitivity
  *
  * @param unknown $str        	
