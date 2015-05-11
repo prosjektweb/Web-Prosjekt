@@ -1,21 +1,13 @@
 <?php
-
-$smarty->assign("navbar_page", "1");
+$smarty->assign ( "navbar_page", "1" );
 
 if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyArchivedPosts = array ();
-
+	
 	for($i = 1; $i < sizeof ( $posts ); $i ++) {
 		$post = $posts [$i];
-		$smartyArchivedPosts [] = array (
-				"id" => $post->getId (),
-				"poster" => User::getUsernameById ( $post->getPoster () ),
-				"postdate" => $post->getPostDate (),
-				"title" => $post->getTitle (),
-				"content" => $post->getContent (),
-				"numcomments" => $post->getCommentCount () 
-		);
+		$smartyArchivedPosts [] = $post->getSmartyArray ();
 	}
 	Archive::setMonths ( $smartyArchivedPosts );
 	
@@ -27,17 +19,17 @@ if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyPosts = array ();
 	$smartyArchivedPosts = array ();
-    $searchResult = array();
-    $search = false;
+	$searchResult = array ();
+	$search = false;
 	
 	$postCount;
 	$archivePosts = false;
-
-    if(hasPost("search")){
-        $search = true;
-        $searchResult = search($posts);
-    }
-
+	
+	if (hasPost ( "search" )) {
+		$search = true;
+		$searchResult = search ( $posts );
+	}
+	
 	if (sizeof ( $posts ) > 5) {
 		$postCount = 5;
 		$archivePosts = true;
@@ -46,50 +38,26 @@ if (isset ( $_GET ['arg0'] )) {
 	} else {
 		$postCount = sizeof ( $posts );
 	}
-
-    if($search){
-
-        for ($i = 0; $i < sizeof ( $searchResult ); $i++) {
-            $post = $searchResult [$i];
-            $smartyPosts [] = array(
-                "id" => $post->getId(),
-                "poster" => User::getUsernameById($post->getPoster()),
-                "postdate" => $post->getPostDate(),
-                "title" => $post->getTitle(),
-                "content" => $post->getContent(),
-                "numcomments" => $post->getCommentCount()
-            );
-        }
-    }
-    else {
-
-
-        for ($i = 0; $i < $postCount; $i++) {
-            $post = $posts [$i];
-            $smartyPosts [] = array(
-                "id" => $post->getId(),
-                "poster" => User::getUsernameById($post->getPoster()),
-                "postdate" => $post->getPostDate(),
-                "title" => $post->getTitle(),
-                "content" => $post->getContent(),
-                "numcomments" => $post->getCommentCount()
-            );
-        }
-
-    }
-
+	
+	if ($search) {
+		
+		for($i = 0; $i < sizeof ( $searchResult ); $i ++) {
+			$post = $searchResult [$i];
+			$smartyPosts [] = $post->getSmartyArray ();
+		}
+	} else {
+		
+		for($i = 0; $i < $postCount; $i ++) {
+			$post = $posts [$i];
+			$smartyPosts [] = $post->getSmartyArray ();
+		}
+	}
+	
 	if ($archivePosts) {
 		
 		for($i = 0; $i < sizeof ( $posts ); $i ++) {
 			$post = $posts [$i];
-			$smartyArchivedPosts [] = array (
-					"id" => $post->getId (),
-					"poster" => User::getUsernameById ( $post->getPoster () ),
-					"postdate" => $post->getPostDate (),
-					"title" => $post->getTitle (),
-					"content" => $post->getContent (),
-					"numcomments" => $post->getCommentCount () 
-			);
+			$smartyArchivedPosts [] = $post->getSmartyArray ();
 		}
 		
 		Archive::setMonths ( $smartyArchivedPosts );

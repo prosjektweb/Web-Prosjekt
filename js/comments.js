@@ -1,7 +1,9 @@
 /**
+ * Submit a comment
  * 
+ * @param link
+ * @param id
  */
-
 function submitComment(link, id) {
 	var commentArea = $("#post-" + id + "-comments");
 	var commentForm = $("#comment-" + id + "-form");
@@ -25,6 +27,12 @@ function submitComment(link, id) {
 					});
 }
 
+/**
+ * Load the comments
+ * 
+ * @param link
+ * @param id
+ */
 function loadComments(link, id) {
 	var commentArea = $("#post-" + id + "-comments");
 	var jqxhr = $
@@ -39,6 +47,14 @@ function loadComments(link, id) {
 					});
 }
 
+/**
+ * Thank you stackoverflow, husker ikke hvor jeg fikk den, men var bare for
+ * debugging n'eways.
+ * 
+ * @param arr
+ * @param level
+ * @returns {String}
+ */
 function print_r(arr, level) {
 	var dumped_text = "";
 	if (!level)
