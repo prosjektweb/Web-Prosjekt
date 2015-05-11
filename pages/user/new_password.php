@@ -18,7 +18,7 @@ $params = array (
 
 $serverForgotkey = User::getForgotkeyByEmail ( $params ['email'] );
 
-if ($params ['forgotkey'] == $serverActivationKey) {
+if ($params ['forgotkey'] == $serverForgotkey) {
 	
 	if (hasPost ( "passwordInput" ) || hasPost ( "passwordRetype" )) {
 		
