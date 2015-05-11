@@ -24,7 +24,7 @@
                 {$post.content}
             </div>
             <br />
-            <button type="button" onClick="postSubmit()" class="btn btn-success">Edit post</button>
+            <button type="button" onClick="postSubmit()" class="btn btn-success">New Post</button>
         </form>                 
     {/if}
 </div>

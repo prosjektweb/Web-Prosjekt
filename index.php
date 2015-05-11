@@ -93,6 +93,11 @@ if ($_SETTINGS ['mod_rewrite']) {
     }
 }
 
+// Safety filter for $page and $file
+// Good luck doing any malicious stuff now hackers!
+ $page = str_filter_only_alpha($page);
+ $file = str_filter_only_alpha($file);
+
 // Assign path values for smarty
 $smarty->assign("path", array(
     "page" => $page,
