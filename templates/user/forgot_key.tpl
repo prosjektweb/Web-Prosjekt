@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-8 blog-main">
 
-            {if $loginStatus eq "success"}
+            {if $status eq "success"}
                 <div class="alert alert-success" role="alert">
                     <strong>Success!</strong> You will receive a email shorty so you can create a new password.
                 </div>
@@ -16,14 +16,14 @@
                 <div class="well">
                     <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.forgot_key}" method="POST">
                         <h2 class="form-signin-heading">Forgotten password: </h2>
-                        {if $loginStatus eq "error" }
+                        {if $status eq "error" }
                             {foreach $errors as $error}
                                 <font color="red"><p>* {$error}</p></font>
                             {/foreach}
                         {/if}
 
-                        <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" required autofocus>
-
+                        <input type="email" id="emailInput" name="emailInput" class="form-control" style="margin-bottom: 15px;" placeholder="Email address" required autofocus>
+                        <br />
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     </form>
                 </div>

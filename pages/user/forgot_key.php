@@ -46,6 +46,6 @@ if (hasPost ( "emailInput" )) {
 }
 
 // Assign status to smarty. So that status message will be shown on site.
-$smarty->assign ( "loginStatus", $status );
+$smarty->assign ( "status", $status );
 $smarty->assign ( "errors", $error );
 ?>

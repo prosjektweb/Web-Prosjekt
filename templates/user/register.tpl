@@ -8,25 +8,30 @@
     <div class="row">
         <div class="col-sm-8 blog-main">
 
-            {if $loginStatus eq "success"}
+            {if $status eq "success"}
                 <div class="alert alert-success" role="alert">
                     <strong>Success!</strong> Your account has been created. You will receive a email shortly to activate your account.
                 </div>
             {else}
             <div class="well">
-                <h2 class="form-signin-heading">Register: </h2>
-                {if $loginStatus eq "error" }
+                <h2 class="form-signin-heading">Register user </h2>
+                {if $status eq "error" }
                     {foreach $errors as $error}
                         <font color="red"><p>* {$error}</p></font>
                     {/foreach}
                 {/if}
-                <form class="form-signin" style="margin-left: 10%;margin-right: 60%;" action="{$links.user_register}" method="POST">
+                <form class="form-signin" style="margin-left: 10%;margin-right: 40%;" action="{$links.user_register}" method="POST">
 
                     <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
-                    <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" >
-                    <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" >
-                    <input type="password" id="passwordInput" name="passwordInput" class="form-control" placeholder="Password" >
-                    <input type="password" id="passwordRetype" name="passwordRetype" class="form-control" placeholder="Re-type password" >
+                    <br />
+                    <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" required>
+                    <br />
+                    <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" required >
+                    <br />
+                    <input type="password" id="passwordInput" name="passwordInput" class="form-control" placeholder="Password" required>
+                    <br />
+                    <input type="password" id="passwordRetype" name="passwordRetype" class="form-control" placeholder="Re-type password" required>
+                    <br />
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Create new account</button>
                 </form>
             </div>

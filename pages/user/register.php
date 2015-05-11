@@ -64,6 +64,9 @@ if(hasPost ( "username" ) || hasPost ( "emailInput" ) || hasPost ( "emailRetype"
     if (User::emailExist($params['emailInput']) >= 1){
         $error[] = "Email address already in use.";
     }
+    if (User::userExist($params['usernameInput'])){
+        $error[] = "Username already exists.";
+    }
     $status = "error";
 
     // if there are errors, set status to error.
@@ -78,6 +81,6 @@ if(hasPost ( "username" ) || hasPost ( "emailInput" ) || hasPost ( "emailRetype"
 }
 
 // Assign status to smarty. So that status message will be shown on site.
-$smarty->assign("loginStatus", $status);
+$smarty->assign("status", $status);
 $smarty->assign("errors", $error);
 ?>

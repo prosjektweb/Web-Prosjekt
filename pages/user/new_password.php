@@ -67,5 +67,5 @@ if ($params ['forgotkey'] == $serverForgotkey) {
 	$status = "invalid";
 }
 
-$smarty->assign ( "loginStatus", $status );
+$smarty->assign ( "status", $status );
 $smarty->assign ( "errors", $error );
