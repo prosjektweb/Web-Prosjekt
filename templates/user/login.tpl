@@ -24,11 +24,11 @@
                     <form action="{$links.user_login}" method="POST">
                         <div class="form-group">
                             <p>Username:</p>
-                            <input type="text" placeholder="Username" class="form-control" name="username">
+                            <input type="text" placeholder="Username" class="form-control" name="username" required autofocus>
                         </div>
                         <div class="form-group">
                             <p>Password:</p>
-                            <input type="password" placeholder="Password" class="form-control" name="password">
+                            <input type="password" placeholder="Password" class="form-control" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-block btn-success">Sign in</button>
 
