@@ -1,3 +1,3 @@
 <?php
 
-$smarty->assign ( "page", "blog/view.tpl" );
+$smarty->assign("navbar_page", "0");

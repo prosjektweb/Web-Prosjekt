@@ -69,6 +69,20 @@ class Post {
     }
 
     /**
+     * Creates an array with the information smarty want's from our post!
+     */
+    function getSmartyArray() {
+        return array(
+            "id" => $this->id,
+            "poster" => User::getUsernameById($this->poster),
+            "postdate" => $this->post_date,
+            "title" => $this->title,
+            "content" => $this->content,
+            "numcomments" => $this->getCommentCount()
+        );
+    }
+
+    /**
      *
      * @param type $title        	
      * @param type $content        	

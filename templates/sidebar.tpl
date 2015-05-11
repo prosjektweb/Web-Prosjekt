@@ -21,10 +21,9 @@
         {/if}
     </div>
     <div class="sidebar-module">
-        <h4>Links about me</h4>
+        <h4>Project Links</h4>
         <ol class="list-unstyled">
-            <li><a href="http://www.github.com/meanz/">GitHub</a></li>
-            <li><a href="http://www.facebook.com/steffen.evensen">Facebook</a></li>
+            <li><a href="http://www.github.com/prosjektweb/web-prosjekt">GitHub</a></li>
         </ol>
     </div>
 </div><!-- /.blog-sidebar -->

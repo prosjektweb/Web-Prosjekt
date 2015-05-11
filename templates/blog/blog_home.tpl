@@ -14,7 +14,7 @@
                     <h2 class="blog-post-title">Arkiverte poster for {Archive::monthNumberToString(getArg(0))} {getArg(1)}</h2><hr>
                     {foreach $month as $post}
                         <div class="blog-post">
-                            <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.title ))}'>{$post.title}</a></h2>
+                            <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
                             {$post.content}
                         </div>
@@ -22,7 +22,7 @@
                 {else}
                     {foreach $posts as $post}
                         <div class="blog-post">
-                            <h2 class="blog-post-title"><a href='{$links.post_view}{$post.id}'>{$post.title}</a></h2>
+                            <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
                             {$post.content}
                         </div>

@@ -1,4 +1,7 @@
 <?php
+
+$smarty->assign("navbar_page", "1");
+
 if (isset ( $_GET ['arg0'] )) {
 	$posts = Post::getPosts ();
 	$smartyArchivedPosts = array ();

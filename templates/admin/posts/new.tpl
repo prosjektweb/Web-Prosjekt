@@ -1,4 +1,5 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    
     <h1 class="page-header">New Post</h1>
     {strip}
         {foreach $post_error as $err}
@@ -11,16 +12,19 @@
             <strong>Post complete!</strong>
         </div>
     {else}
-        <form action="{$links.admin_post_new_submit}" method="POST">
+        <script type="text/javascript" src="{$root}/js/admin.js"></script>
+        <form action="{makeLink("admin", "posts", array( "new", "submit" ))}" method="POST">
             <h4>Title:</h4>
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
             <br />
             <br />
-            <textarea cols="60" rows="10" placeholder="Enter Content" name="post_content">{$post.content}</textarea>
+            {include file="../../textarea.tpl"}
+            <input type="hidden" name="post_content" id="post_content" value="">
+            <div style="width: 80%; min-height: 250px; border: 1px solid #269abc;" id="editor">
+                {$post.content}
+            </div>
             <br />
-            <br />
-            <button type="submit" class="btn btn-success">New post</button>
-        </form>         
+            <button type="button" onClick="postSubmit()" class="btn btn-success">Edit post</button>
+        </form>                 
     {/if}
-
 </div>
