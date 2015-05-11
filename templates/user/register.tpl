@@ -20,7 +20,7 @@
                         <font color="red"><p>* {$error}</p></font>
                     {/foreach}
                 {/if}
-                <form class="form-signin" style="margin-left: 10%;margin-right: 40%;" action="{$links.user_register}" method="POST">
+                <form class="form-signin" style="margin-right: 40%;" action="{$links.user_register}" method="POST">
 
                     <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
                     <br />
