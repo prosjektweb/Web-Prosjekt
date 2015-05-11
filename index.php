@@ -128,8 +128,8 @@ if (!$didInclude) {
 }
 // Allt annet
 //running hit counter
-Hitcount::doHitcount($page, $file);
-$hits = Hitcount::getHitcount($page, $file);
+Hitcount::doHitcount($page, $file, getArg(0));
+$hits = Hitcount::getHitcount($page, $file, getArg(0));
 $smarty->assign("hits", $hits);
 
 // Assign user values last so that any session edits will be noticed

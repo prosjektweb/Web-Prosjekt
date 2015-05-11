@@ -350,7 +350,7 @@ function search($posts) {
 	for($i = 0; $i < sizeof ( $posts ); $i ++) {
 		$post = $posts [$i];
 		
-		if (str_contains_ignorecase ( $post->getTitle (), postFilter ( "search" ) ) === 0 || str_contains_ignorecase ( $post->getContent (), postFilter ( "search" ) ) === 0) {
+		if (str_contains_ignorecase ( $post->getTitle (), postFilter ( "search" ) ) || str_contains_ignorecase ( $post->getContent (), postFilter ( "search" ) )) {
 			$search [] = $post;
 		}
 	}
