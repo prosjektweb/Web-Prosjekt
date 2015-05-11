@@ -16,7 +16,7 @@
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
-                            {$post.content}
+                            {textarea_filter({$post.content})}
                         </div>
                     {/foreach}
                 {else}
@@ -24,7 +24,7 @@
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="{makeLink("user", "view", array("{$post.poster}"))}">{$post.poster|capitalize}</a></p>
-                            {$post.content}
+                            {textarea_filter({$post.content})}
                         </div>
                         
                         <p id="post-{$post.id}-comments" class="blog-post-meta">

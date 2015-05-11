@@ -17,6 +17,7 @@
 						{/if}
 					</div>
 					<div style="word-wrap: break-word; color: #333;">{$comment.content}</div>
+					
 					<div style='clear: both;'></div>
 				</div>
 			{/foreach} 

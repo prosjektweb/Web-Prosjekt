@@ -3,7 +3,7 @@
 require ('../ajax.php');
 //check if we are allowed here!
 if(!isLoggedIn()) {
-	$smarty->display("login.tpl");
+	$smarty->display("/comment/login.tpl");
 	return;
 }
 //Parse args

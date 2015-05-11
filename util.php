@@ -2,15 +2,39 @@
 global $links;
 
 /**
+ * Textarea filter
+ *
+ * @param unknown $in        	
+ */
+function textarea_filter($in) {
+	$allowed_tags = array (
+			"code",
+			"p",
+			"b",
+			"em",
+			"li",
+			"ul" 
+	);
+	// Search through input and replace stuff
+	$allowed = "";
+	for($i = 0; $i < sizeof ( $allowed_tags ); $i ++) {
+		$allowed .= $allowed_tags [$i] . ($i == sizeof ( $allowed_tags ) - 1 ? "" : "|");
+	}
+	$in = preg_replace ( '#&lt;(/?(?:' . $allowed . '))&gt;#', '<\1>', $in );
+	$in = nl2br($in);
+	return $in;
+}
+
+/**
  * Filter the given string for anything but alphanumerics.
- * 
- * @param unknown $str
+ *
+ * @param unknown $str        	
  * @return mixed
  */
 function str_filter_only_alpha($str) {
-	//Ref: http://stackoverflow.com/questions/840948/stripping-everything-but-alphanumeric-chars-from-a-string-in-php
-	//Regex is hard :<
-	//Must learn this some day!
+	// Ref: http://stackoverflow.com/questions/840948/stripping-everything-but-alphanumeric-chars-from-a-string-in-php
+	// Regex is hard :<
+	// Must learn this some day!
 	return preg_replace ( "/[^a-z0-9_]+/i", "", $str );
 }
 
@@ -94,7 +118,7 @@ function makeLink($page, $file, $vars = null) {
 		}
 		return $str;
 	} else {
-		$str = "index.php?page=" . $page . "&file=" . $file;
+		$str = $ROOT_DIR . "/index.php?page=" . $page . "&file=" . $file;
 		for($i = 0; $i < sizeof ( $vars ); $i ++) {
 			$str .= "&arg$i=" . $vars [$i];
 		}
