@@ -25,6 +25,8 @@
             </div>
             <br />
             <button type="button" onClick="postSubmit()" class="btn btn-success">New Post</button>
-        </form>                 
+        </form>
+        <div id="uploadlog">
+        </div>
     {/if}
 </div>

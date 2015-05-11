@@ -2,52 +2,57 @@
 class Attachment {
 	
 	/**
-	 * The id of this attachment
 	 *
 	 * @var unknown
 	 */
 	var $id;
 	
 	/**
-	 * The id of the comment this attachment is attached to, no pun intended
 	 *
 	 * @var unknown
 	 */
-	var $comment_id;
+	var $name;
 	
 	/**
-	 * Empty ctor
+	 *
+	 * @var unknown
+	 */
+	var $data;
+	
+	/**
+	 *
+	 * @var unknown
+	 */
+	var $data;
+	
+	/**
 	 */
 	function __construct() {
 	}
 	
 	/**
-	 * Creates a new attachment
+	 *
+	 * @param unknown $name        	
+	 * @param unknown $data        	
+	 * @return unknown|NULL
 	 */
-	function newAttachment() {
-	}
-	
-	/**
-	 * Deletes the attachment with the specified id
-	 * 
-	 * @param unknown $id        	
-	 */
-	function removeAttachment($id) {
-	}
-	
-	/**
-	 * Loads the attachment with the specified id
-	 * 
-	 * @param unknown $id        	
-	 */
-	function loadAttachment($id) {
-	}
-	
-	/**
-	 * Loasd the attachments from the specified comment
-	 * 
-	 * @param unknown $comment_id        	
-	 */
-	function loadAttachments($comment_id) {
+	function newAttachment($name, $data) {
+		$image = new Image ();
+		$image->name = $name;
+		$image->data = $data;
+		
+		// Do them inserts
+		try {
+			$stmt = getDB ()->prepare ( "INSERT INTO images (name, data) VALUES(:name, :data)" );
+			$stmt->execute ( array (
+					"name" => $name,
+					"data" => $data 
+			) );
+			$comment->id = getDB ()->lastInsertId ();
+			return $comment;
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return null;
 	}
 }
