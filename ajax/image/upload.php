@@ -20,8 +20,13 @@ if ((($_FILES ["file"] ["type"] == "image/gif") || ($_FILES ["file"] ["type"] ==
 		echo "Size: " . ($_FILES ["file"] ["size"] / 1024) . " kB<br>";
 		echo "Temp file: " . $_FILES ["file"] ["tmp_name"] . "<br>";
 		$data = file_get_contents ( $filename );
+		echo "aa";
 		$base64 = 'data:image/' . $type . ';base64,' . base64_encode ( $data );
-		$imgId = Attachment::newImage ( "this is image", $base64 );
+		try {
+			$imgId = Attachment::newImage ( "this is image", $base64 );
+		} catch ( Exception $ex ) {
+			echo $ex;
+		}
 		echo "Uploaded image something something: " . $imgId;
 	}
 } else {

@@ -30,10 +30,10 @@ class Attachment {
 	 * @param unknown $data        	
 	 * @return unknown|NULL
 	 */
-	function newAttachment($name, $data) {
-		$image = new Image ();
-		$image->name = $name;
-		$image->data = $data;
+	static function newAttachment($name, $data) {
+		$attachment = new Attachment ();
+		$attachment->name = $name;
+		$attachment->data = $data;
 		
 		// Do them inserts
 		try {
@@ -42,8 +42,8 @@ class Attachment {
 					"name" => $name,
 					"data" => $data 
 			) );
-			$comment->id = getDB ()->lastInsertId ();
-			return $comment;
+			$attachment->id = getDB ()->lastInsertId ();
+			return $attachment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}
