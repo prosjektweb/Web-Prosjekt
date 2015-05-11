@@ -38,8 +38,8 @@ if (getArg ( 0 ) == "new") {
 		if (strlen ( $title ) > $_SETTINGS ["MAX_TITLE_SIZE"]) {
 			$error [] = "* Title must be 1-" . $_SETTINGS ["MAX_TITLE_SIZE"] . " characters in length. Current length: (" . strlen ( $title ) . ")";
 		}
-		if (strlen ( $content ) > 1000) {
-			$error [] = "* Content must be between 1-1000 characters in length. Current length: (" . strlen ( $content ) . ")";
+		if (strlen ( $content ) > $_SETTINGS ["MAX_POST_SIZE"]) {
+			$error [] = "* Content must be between 1-" . $_SETTINGS ["MAX_POST_SIZE"] . " characters in length. Current length: (" . strlen ( $content ) . ")";
 		}
 		
 		if (sizeof ( $error ) > 0) {
