@@ -20,12 +20,6 @@ class Attachment {
 	var $data;
 	
 	/**
-	 *
-	 * @var unknown
-	 */
-	var $data;
-	
-	/**
 	 */
 	function __construct() {
 	}

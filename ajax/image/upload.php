@@ -2,9 +2,6 @@
 // Include main
 require ('../ajax.php');
 
-echo "But...";
-if(true) return;
-
 $allowedExts = array (
 		"gif",
 		"jpeg",
@@ -24,7 +21,7 @@ if ((($_FILES ["file"] ["type"] == "image/gif") || ($_FILES ["file"] ["type"] ==
 		echo "Temp file: " . $_FILES ["file"] ["tmp_name"] . "<br>";
 		$data = file_get_contents ( $filename );
 		$base64 = 'data:image/' . $type . ';base64,' . base64_encode ( $data );
-		//$imgId = Image::newImage ( "this is image", $base64 );
+		$imgId = Attachment::newImage ( "this is image", $base64 );
 		echo "Uploaded image something something: " . $imgId;
 	}
 } else {
