@@ -10,6 +10,7 @@ class User {
 	var $group_id;
 	var $activationkey;
 	var $forgotkey;
+
 	function __construct() {
 	}
 	function getId() {
@@ -105,7 +106,8 @@ class User {
 	 *        	$email
 	 * @param
 	 *        	$password
-	 * @return null Function to register user.
+	 * @return null
+     *      Function to register user.
 	 */
 	static function registerUser($username, $email, $password) {
 		try {
@@ -141,10 +143,12 @@ class User {
 	}
 	
 	/**
-	 *
+	 *  Source: http://stackoverflow.com/questions/2235434/how-to-generate-a-random-long-salt-for-use-in-hashing
 	 * @param
 	 *        	$length
-	 * @return null|string Generate random salt value for password protection / activation key / forgotten password key
+	 * @return null|string
+     *
+     * Generate random salt value for password protection / activation key / forgotten password key
 	 */
 	static function rand_salt($length) {
 		$salt = null;
@@ -184,8 +188,8 @@ class User {
 	 *        	$email
 	 * @param
 	 *        	$username
-	 * @param $link Send
-	 *        	mail for user to change their password.
+	 * @param $link
+     * Send mail for user to change their password.
 	 */
 	static function forgotkey_mail($email, $username, $link) {
 		$to = $email;
@@ -206,8 +210,8 @@ class User {
 	 *
 	 * @param
 	 *        	$email
-	 * @param $username Send
-	 *        	confirmation mail for changed password.
+	 * @param $username
+     * Send confirmation mail for changed password.
 	 */
 	static function confirm_password_change($email, $username) {
 		$to = $email;
@@ -229,7 +233,9 @@ class User {
 	 *
 	 * @param
 	 *        	$username
-	 * @return null Get activation key from username
+	 * @return null
+     *
+     * Get activation key from username
 	 */
 	static function getActivationKeyByUsername($username) {
 		try {
@@ -246,9 +252,9 @@ class User {
 	
 	/**
 	 *
-	 * @param $username Activate
-	 *        	users account
-	 *        	
+	 * @param $username
+	 *
+	 *        	Activate users account
 	 *        	Set activationKey field in table to null.
 	 */
 	static function activate_account($username) {
@@ -266,7 +272,10 @@ class User {
 	 *
 	 * @param
 	 *        	$email
-	 * @return mixed|null Return number of users in the database with this email address.
+	 * @return mixed|null
+     *
+     * Return number of users in the database with this email address.
+     * Email in use error check.
 	 */
 	static function emailExist($email) {
 		try {
@@ -286,7 +295,10 @@ class User {
 	 *
 	 * @param
 	 *        	$username
-	 * @return mixed|null Return number of users in the database with this username.
+	 * @return mixed|null
+     *
+     * Return number of users in the database with this username.
+     * Username in use error check.
 	 */
 	static function userExist($username) {
 		try {
@@ -306,7 +318,9 @@ class User {
 	 *
 	 * @param
 	 *        	$email
-	 * @return null Get forgotkey from database by email
+	 * @return null
+     *
+     * Get forgotkey from database by email
 	 */
 	static function getForgotkeyByEmail($email) {
 		try {
@@ -325,7 +339,9 @@ class User {
 	 *
 	 * @param
 	 *        	$email
-	 * @return null Get username from database by using email address.
+	 * @return null
+     *
+     * Get username from database by using email address.
 	 */
 	static function getUsernameByEmail($email) {
 		try {
@@ -342,10 +358,11 @@ class User {
 	
 	/**
 	 *
-	 * @param
-	 *        	$username
-	 * @param $forgotkey Update
-	 *        	forgotkey on user.
+	 * @param $username
+	 *
+	 * @param $forgotkey
+     *
+	 *        Update forgotkey on user.
 	 */
 	static function update_forgotkey($username, $forgotkey) {
 		try {
@@ -359,6 +376,13 @@ class User {
 			setSession ( "error", $ex->getMessage () );
 		}
 	}
+
+    /**
+     * @param $username
+     * @param $password
+     *
+     *  Update password for user.
+     */
 	static function update_password($username, $password) {
 		try {
 			

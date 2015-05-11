@@ -14,8 +14,10 @@ $status = "";
 
 // Check if any params is set.
 if (hasPost ( "emailInput" )) {
-	$email = postFilter ( "emailInput" );
-	if (User::emailExist ( $email ) <= 1) {
+
+    $email = postFilter ( "emailInput" );
+
+    if (User::emailExist ( $email ) <= 1) {
 		$error = "Email address does not exist";
 	}
 	

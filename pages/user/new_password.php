@@ -22,8 +22,11 @@ if ($params ['forgotkey'] == $serverForgotkey) {
 
 	if (hasPost ( "passwordInput" ) || hasPost ( "passwordRetype" )) {
 
+        // Perform error check
 		$params ['passwordInput'] = trim ( $params ['passwordInput'] );
 		$params ['passwordRetype'] = trim ( $params ['passwordRetype'] );
+
+        // check input for errors
 		if ($params ['passwordInput'] == "") {
 			$error [] = "Please type in password.";
 		}
@@ -61,9 +64,10 @@ if ($params ['forgotkey'] == $serverForgotkey) {
 
 	}
 } else {
+    // If keys dont match.
 	$error[] = "Link is used or invalid.";
 	$status = "invalid";
 }
-
+// Assign status to smarty. So that status message will be shown on site.
 $smarty->assign ( "status", $status );
 $smarty->assign ( "errors", $error );
