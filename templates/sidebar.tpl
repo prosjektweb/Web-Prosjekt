@@ -12,7 +12,7 @@
                     {$yearval = array_search($year, $years)}
                     {foreach $year as $month}
 
-                        <li><a href="{makeLink("", "", array($month, $yearval) )}">{Archive::monthNumberToString($month)} {$yearval}</a></li>
+                        <li><a href="{makeLink("", "", array($month, $yearval) )}">{Archive::monthNumberToString($month)} {$yearval} ({sizeof(Archive::getMonthArray ( $archivedposts, $month ))})</a></li>
 
                     {/foreach}
                 {/foreach}

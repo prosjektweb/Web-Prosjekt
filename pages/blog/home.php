@@ -1,17 +1,17 @@
 <?php
 $smarty->assign ( "navbar_page", "1" );
 
-if (isset ( $_GET ['arg0'] )) {
+if (hasArg(0)) {
 	$posts = Post::getPosts ();
 	$smartyArchivedPosts = array ();
 	
-	for($i = 1; $i < sizeof ( $posts ); $i ++) {
+	for($i = 0; $i < sizeof ( $posts ); $i ++) {
 		$post = $posts [$i];
 		$smartyArchivedPosts [] = $post->getSmartyArray ();
 	}
 	Archive::setMonths ( $smartyArchivedPosts );
 	
-	$array = Archive::getMonthArray ( $smartyArchivedPosts, $_GET ['arg0'] );
+	$array = Archive::getMonthArray ( $smartyArchivedPosts, getArg(0) );
 	$smarty->assign ( "month", $array );
 } else {
 	
