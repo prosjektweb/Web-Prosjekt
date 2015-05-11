@@ -7,7 +7,7 @@ if (isLoggedIn()) {
 
 global $smarty;
 // Assign page to smarty
-$smarty->assign("page", "user/register.tpl");
+$smarty->assign("page", "user/forgot_key.tpl");
 
 
 $email = postFilter("emailInput");

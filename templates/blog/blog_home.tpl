@@ -23,7 +23,7 @@
                     {foreach $posts as $post}
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
-                            <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
+                            <p class="blog-post-meta">{$post.postdate} by <a href="{makeLink("user", "view", array("{$post.poster}"))}">{$post.poster|capitalize}</a></p>
                             {$post.content}
                         </div>
                         

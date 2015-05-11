@@ -2,12 +2,16 @@
 global $links;
 
 /**
- * Filter 
+ * Filter the given string for anything but alphanumerics.
+ * 
  * @param unknown $str
  * @return mixed
  */
 function str_filter_only_alpha($str) {
-	return preg_replace ( "/[^a-z0-9]+/i", "", $str );
+	//Ref: http://stackoverflow.com/questions/840948/stripping-everything-but-alphanumeric-chars-from-a-string-in-php
+	//Regex is hard :<
+	//Must learn this some day!
+	return preg_replace ( "/[^a-z0-9_]+/i", "", $str );
 }
 
 /**
@@ -84,7 +88,7 @@ function addLink($name, $page, $file, $vars = null) {
 function makeLink($page, $file, $vars = null) {
 	include ("config.php");
 	if ($_SETTINGS ['mod_rewrite']) {
-		$str = "/" . $page . "/" . $file . "/";
+		$str = $ROOT_DIR . "/" . $page . "/" . $file . "/";
 		for($i = 0; $i < sizeof ( $vars ); $i ++) {
 			$str .= $vars [i] . "/";
 		}
