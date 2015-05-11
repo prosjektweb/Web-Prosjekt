@@ -16,7 +16,7 @@ global $smarty;
 $smarty = new Smarty ();
 
 // Options
-$smarty->debugging = true;
+$smarty->debugging = false;
 $smarty->caching = false;
 
 // Set templates dir
