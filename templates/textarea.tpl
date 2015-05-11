@@ -20,7 +20,7 @@
         <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
         <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
     </div>
-    <div class="btn-group">
+	<div class="btn-group">
         <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
         <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
         <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
@@ -42,6 +42,7 @@
     </div>
 
     <div class="btn-group">
+    	<a class="btn" data-edit="insertcodetag" title="Code Tag"><i class="icon-list-ul"></i></a>
         <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
         <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
     </div>

@@ -2,27 +2,57 @@
 global $links;
 
 /**
+ * @Ref http://stackoverflow.com/questions/25223295/replace-all-but-certain-html-tags-with-htmlspecialchars-in-php
+ * 
+ * @param unknown $match        	
+ * @return string
+ */
+function fix_attributes($match) {
+	return "<" . $match [1] . str_replace ( '&quot;', '"', $match [2] ) . ">";
+}
+
+/**
+ * @Ref http://stackoverflow.com/questions/25223295/replace-all-but-certain-html-tags-with-htmlspecialchars-in-php
+ * 
+ * @param unknown $str        	
+ * @param unknown $allowed        	
+ * @return string
+ */
+function allow_only($str, $allowed) {
+	$str = htmlspecialchars ( $str );
+	foreach ( $allowed as $a ) {
+		$str = preg_replace_callback ( "/&lt;(" . $a . "){1}([\s\/\.\w=&;:#]*?)&gt;/", fix_attributes, $str );
+		$str = str_replace ( "&lt;/" . $a . "&gt;", "</" . $a . ">", $str );
+	}
+	return $str;
+}
+
+/**
  * Textarea filter
  *
  * @param unknown $in        	
  */
-function textarea_filter($in) {
+function textarea_filter($str) {
 	$allowed_tags = array (
 			"code",
 			"p",
 			"b",
 			"em",
 			"li",
-			"ul" 
+			"ul",
+			"div",
+			"br",
+			"br/",
+			"br /",
+			"blockquote",
+			"strike",
+			"u",
+			"ol" 
 	);
 	// Search through input and replace stuff
-	$allowed = "";
-	for($i = 0; $i < sizeof ( $allowed_tags ); $i ++) {
-		$allowed .= $allowed_tags [$i] . ($i == sizeof ( $allowed_tags ) - 1 ? "" : "|");
-	}
-	$in = preg_replace ( '#&lt;(/?(?:' . $allowed . '))&gt;#', '<\1>', $in );
-	$in = nl2br($in);
-	return $in;
+	$str = htmlspecialchars_decode ( $str );
+	allow_only ( $str, $allowed_tags );
+	return $str;
 }
 
 /**

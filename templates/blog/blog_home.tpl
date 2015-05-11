@@ -22,7 +22,15 @@
                 {else}
                     {foreach $posts as $post}
                         <div class="blog-post">
-                            <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
+                            <h2 class="blog-post-title">
+                            	<a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a>
+                            	<a href="javascript:doDelete('{makeLink("admin", "posts", array("delete", "{$post.id}"))}')">
+                            		<span style="float: right; font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            	</a>
+                            	<a href="{makeLink("admin", "posts", array("edit", "", "{$post.id}"))}">
+                            		<span style="float: right; font-size: 24px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            	</a>
+                            </h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="{makeLink("user", "view", array("{$post.poster}"))}">{$post.poster|capitalize}</a></p>
                             {textarea_filter({$post.content})}
                         </div>

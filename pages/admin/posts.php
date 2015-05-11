@@ -136,7 +136,6 @@ if (getArg ( 0 ) == "new") {
 	
 	if (getArg ( 0 ) == "delete") {
 		$id = htmlspecialchars ( getArg ( 1 ) );
-		echo "is delete";
 		if (is_numeric ( $id )) {
 			// Attempt to delete
 			Post::delete ( $id );

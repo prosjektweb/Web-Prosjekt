@@ -9,22 +9,24 @@
 
     {if $post_success eq "true"}
         <div class="alert alert-success" role="alert">
-            <strong>Post complete!</strong>
+            <strong>Post was updated!</strong>
         </div>
-    {else}
-        <script type="text/javascript" src="{$root}/js/admin.js"></script>
-        <form action="{$links.admin_posts_edit_submit}{$post.id}" method="POST">
-            <h4>Title:</h4>
-            <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
-            <br />
-            <br />
-            {include file="../../textarea.tpl"}
-            <input type="hidden" name="post_content" id="post_content" value="">
-            <div style="width: 80%; min-height: 250px; border: 1px solid #269abc;" id="editor">
-                {$post.content}
-            </div>
-            <br />
-            <button type="button" onClick="postSubmit()" class="btn btn-success">Edit post</button>
-        </form>         
-    {/if}
+	{/if}
+	<script type="text/javascript" src="{$root}/js/admin.js"></script>
+	<form action="{$links.admin_posts_edit_submit}{$post.id}" method="POST">
+			<h4>Title:</h4>
+			<input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
+		<br />
+		<br />
+			{include file="../../textarea.tpl"}
+		<input type="hidden" name="post_content" id="post_content" value="">
+		<div style="width: 80%; min-height: 250px; border: 1px solid #269abc;" id="editor">{textarea_filter($post.content)}</div>
+		<br />
+		<button type="button" onClick="postSubmit()" class="btn btn-success">Edit post</button>
+	</form>         
+	
+	<div id="drop">
+	
+	</div>
+   
 </div>
