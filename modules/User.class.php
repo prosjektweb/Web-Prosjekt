@@ -280,11 +280,15 @@ class User {
 	static function emailExist($email) {
 		try {
 			
-			$stmt = getDB ()->prepare ( "SELECT count(*) FROM users WHERE email = ?" );
+			$stmt = getDB ()->prepare ( "SELECT email FROM users WHERE email = ?" );
 			$stmt->bindParam ( 1, $email );
 			$stmt->execute ();
-			$fetch = $stmt->fetch ();
-			return $fetch;
+
+            if($stmt->rowCount() > 0){
+                return true;
+            }else {
+                return false;
+            }
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}
@@ -303,11 +307,20 @@ class User {
 	static function userExist($username) {
 		try {
 			
-			$stmt = getDB ()->prepare ( "SELECT count(*) FROM users WHERE username = ?" );
+			$stmt = getDB ()->prepare ( "SELECT username FROM users WHERE username = ?" );
 			$stmt->bindParam ( 1, $username );
 			$stmt->execute ();
-			$fetch = $stmt->fetch ();
-			return $fetch;
+
+            if($stmt->rowCount() > 0){
+
+                return true;
+
+            }else {
+
+                return false;
+
+            }
+
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}

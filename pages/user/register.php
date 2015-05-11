@@ -61,7 +61,7 @@ if(hasPost ( "username" ) || hasPost ( "emailInput" ) || hasPost ( "emailRetype"
     if (strlen($params['passwordInput']) < 8){
         $error[] = "Password too short.";
     }
-    if (User::emailExist($params['emailInput']) >= 1){
+    if (User::emailExist($params['emailInput'])){
         $error[] = "Email address already in use.";
     }
     if (User::userExist($params['usernameInput'])){
