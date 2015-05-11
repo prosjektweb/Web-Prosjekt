@@ -31,9 +31,9 @@
                             <input type="password" placeholder="Password" class="form-control" name="password">
                         </div>
                         <button type="submit" class="btn btn-block btn-success">Sign in</button>
-                        <p align="right">
-                        <a type="button" class="btn btn-success" href="{makeLink("user", "forgot_key")}" >Forgotten password</a>
-                        </p>
+
+                        <a type="button" class="btn btn-block btn-success" href="{makeLink("user", "forgot_key")}" >Forgotten password</a>
+
                     </form>
                     </p>
                 </div>
