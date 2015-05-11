@@ -19,9 +19,9 @@ $params = array (
 $serverForgotkey = User::getForgotkeyByEmail ( $params ['email'] );
 
 if ($params ['forgotkey'] == $serverForgotkey) {
-	
+	dbg("1");
 	if (hasPost ( "passwordInput" ) || hasPost ( "passwordRetype" )) {
-		
+		dbg("2");
 		$params ['passwordInput'] = trim ( $params ['passwordInput'] );
 		$params ['passwordRetype'] = trim ( $params ['passwordRetype'] );
 		if ($params ['passwordInput'] == "") {
@@ -42,21 +42,28 @@ if ($params ['forgotkey'] == $serverForgotkey) {
 		// if there are errors, set status to error.
 		if (sizeof ( $error ) > 0) {
 			$status = "error";
+			dbg("4");
 		} else {
-			// If no errors, change password and set status to success.
-			// Update password
-			User::update_password ( $params ['username'], $params ['passwordInput'] );
-			// Update forgotkey to null
-			User::update_forgotkey ( $params ['username'], null );
-			// Send confirmation mail.
-			User::confirm_password_change ( $params ['email'], $params ['username'] );
+			dbg("5");
+			try {
+				// If no errors, change password and set status to success.
+				// Update password
+				User::update_password ( $params ['username'], $params ['passwordInput'] );
+				// Update forgotkey to null
+				User::update_forgotkey ( $params ['username'], null );
+				// Send confirmation mail.
+				User::confirm_password_change ( $params ['email'], $params ['username'] );
+			} catch ( Exception $ex ) {
+				setSession ( "error", $ex->getMessage () );
+			}
+			
 			$status = "success";
 		}
-		
-		$status = "activated";
+	} else {
+		dbg("3");
 	}
 } else {
-	$error = "Link is used or invalid.";
+	$error[] = "Link is used or invalid.";
 	$status = "invalid";
 }
 

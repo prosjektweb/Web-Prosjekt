@@ -2,6 +2,14 @@
 global $links;
 
 /**
+ * dbg
+ * @param unknown $var
+ */
+function dbg($var) {
+	echo $var . "<br />";
+}
+
+/**
  * @Ref http://stackoverflow.com/questions/25223295/replace-all-but-certain-html-tags-with-htmlspecialchars-in-php
  * 
  * @param unknown $match        	

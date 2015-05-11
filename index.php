@@ -49,7 +49,6 @@ addLink("post_view", "blog", "view");
 addLink("view_archive", "", "");
 addLink("user_register", "user", "register");
 addLink("verify_user", "user", "verify");
-addLink("new_password", "user", "new_password");
 addLink("forgot_key", "user", "forgot_key");
 
 $page = "";

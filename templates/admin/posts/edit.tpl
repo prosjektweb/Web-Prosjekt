@@ -13,9 +13,9 @@
         </div>
 	{/if}
 	<script type="text/javascript" src="{$root}/js/admin.js"></script>
-	<form action="{$links.admin_posts_edit_submit}{$post.id}" method="POST">
-			<h4>Title:</h4>
-			<input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
+	<form action="{makeLink("admin", "posts", array( "new", "submit", "{$post.id}"))}" method="POST">
+		<h4>Title:</h4>
+		<input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
 		<br />
 		<br />
 			{include file="../../textarea.tpl"}

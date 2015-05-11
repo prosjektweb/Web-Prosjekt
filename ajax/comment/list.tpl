@@ -8,11 +8,9 @@
 					<div style="float: left; padding: 6px; margin-right: 5px; background-color: #333;"><span style="font-size: 32px;" class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
 					<div style="font-size: 16px;">
 						<i>{$comment.poster|capitalize} - {$comment.timesince}</i>
-						{if $user.isAdmin eq "true"}
+						{if $user.isAdmin eq "false"}
 							<div style="float: right; text-align: right;">
-								<button type="button" class="btn btn-default" style="padding: 5px; padding-left: 10px; padding-right: 10px;">
-									<span style="font-size: 12px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
+								<a href="#"><span style="font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 							</div>
 						{/if}
 					</div>
