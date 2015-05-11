@@ -2,6 +2,41 @@
 global $links;
 
 /**
+ * Searched the given string for the given string ignoring case sensitivity
+ *
+ * @param unknown $str        	
+ * @param unknown $like        	
+ * @return boolean
+ */
+function str_contains_ignorecase($str, $like) {
+	return str_contains ( strtolower ( $str ), strtolower ( $like ) );
+}
+
+/**
+ * Searched the given string for the given string
+ *
+ * @param unknown $str        	
+ * @param unknown $like        	
+ * @return boolean
+ */
+function str_contains($str, $like) {
+	$found = false;
+	$likePos = 0;
+	for($i = 0; $i < strlen ( $str ); $i ++) {
+		if ($str [$i] == $like [$likePos]) {
+			$likePos = $likePos + 1;
+		} else {
+			$likePos = 0;
+		}
+		if ($likePos == strlen ( $like )) {
+			$found = true;
+			break;
+		}
+	}
+	return $found;
+}
+
+/**
  * Check if the given array has the given key
  *
  * @param unknown $array        	
@@ -105,7 +140,7 @@ function isAdmin() {
 	if (! isLoggedIn ()) {
 		return false;
 	}
-	return session ( "user" )->getGroupId() == 1;
+	return session ( "user" )->getGroupId () == 1;
 }
 
 /**
@@ -231,7 +266,8 @@ function postFilter($var) {
 
 /**
  * Utility function, from: http://stackoverflow.com/questions/2915864/php-how-to-find-the-time-elapsed-since-a-date-time
- * @param unknown $time_stamp
+ *
+ * @param unknown $time_stamp        	
  * @return string
  */
 function get_time_ago($time_stamp) {
@@ -278,9 +314,10 @@ function get_time_ago($time_stamp) {
 
 /**
  * Utility function, from http://stackoverflow.com/questions/2915864/php-how-to-find-the-time-elapsed-since-a-date-time
- * @param unknown $time_stamp
- * @param unknown $divisor
- * @param unknown $time_unit
+ *
+ * @param unknown $time_stamp        	
+ * @param unknown $divisor        	
+ * @param unknown $time_unit        	
  * @return string
  */
 function get_time_ago_string($time_stamp, $divisor, $time_unit) {
@@ -302,17 +339,21 @@ function get_time_ago_string($time_stamp, $divisor, $time_unit) {
 	}
 }
 
-function search($posts){
-
-    $search = array();
-
-    for($i = 0; $i  < sizeof ( $posts ); $i ++) {
-        $post = $posts [$i];
-
-        if(strripos($post->getTitle(), postFilter("search")) === 0 || strripos($post->getContent(), postFilter("search")) === 0){
-            $search [] = $post;
-        }
-    }
-
-    return $search;
+/**
+ *
+ * @param unknown $posts        	
+ * @return multitype:unknown
+ */
+function search($posts) {
+	$search = array ();
+	
+	for($i = 0; $i < sizeof ( $posts ); $i ++) {
+		$post = $posts [$i];
+		
+		if (str_contains_ignorecase ( $post->getTitle (), postFilter ( "search" ) ) === 0 || str_contains_ignorecase ( $post->getContent (), postFilter ( "search" ) ) === 0) {
+			$search [] = $post;
+		}
+	}
+	
+	return $search;
 }
