@@ -14,7 +14,7 @@ class Attachment {
 	var $name;
 	
 	/**
-	 * 
+	 *
 	 * @var unknown
 	 */
 	var $type;
@@ -28,6 +28,12 @@ class Attachment {
 	/**
 	 */
 	function __construct() {
+	}
+	
+	/**
+	 */
+	function printBase64() {
+		echo "<img src='data:image/" . $this->type . ";base64," . base64_encode ( $this->data ) . "' />";
 	}
 	
 	/**
@@ -69,13 +75,14 @@ class Attachment {
 		
 		// Do them inserts
 		try {
-			$stmt = getDB ()->prepare ( "INSERT INTO attachments (name, type, data) VALUES(:name, :type, :data)" );
-			$stmt->execute ( array (
-					"name" => $name,
-					"data" => $data,
-					"type" => $type
-			) );
+			$stmt = getDB ()->prepare ( "INSERT INTO attachments (name, type, data) VALUES(?, ?, ?)" );
+			$stmt->bindParam(1, $name);
+			$stmt->bindParam(2, $type);
+			$stmt->bindParam(3, $data, PDO::PARAM_LOB);
+			getDB ()->beginTransaction();
+			$stmt->execute();
 			$attachment->id = getDB ()->lastInsertId ();
+			getDB ()->commit();
 			return $attachment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
