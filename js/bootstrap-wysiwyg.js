@@ -6,25 +6,28 @@
     'use strict';
 
     var uploadFile = function (fileInfo) {
-        dbg(nl2br(print_r(fileInfo)));
         var loader = $.Deferred();
         //Requires jquery.upload.js to be loaded
         //Link requires prosjektweb.core.js
         var link = wp_get_root() + "/ajax/image/upload.php";
-        dbg("Upload to " + link);
-
         //Create a formdata
         var formData = new FormData();
         formData.append('file', fileInfo, fileInfo.name);
-        dbg("Starting upload...");
+        var pgBar = $("#output_pgb");
+        var pgInfo = $("#output_text");
+
+        pgInfo.html("Uploading " + fileInfo.name);
+        pgBar.html("0%");
+        pgBar.css("width", "0%");
+        pgBar.parent().css("visibility", "visible");
+
         $.upload(link, formData).progress(function (progressEvent, upload) {
             if (progressEvent.lengthComputable) {
                 var percent = Math.round(progressEvent.loaded * 100 / progressEvent.total) + '%';
-                dbg("Progress: " + percent);
+                pgBar.html(percent);
+                pgBar.css("width", "" + percent);
             }
         }).done(function (data) {
-            dbg("Upload Complete!");
-            dbg(data);
             loader.resolve(data);
         });
         //

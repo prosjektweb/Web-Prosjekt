@@ -1,5 +1,5 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    
+
     <h1 class="page-header">New Post</h1>
     {strip}
         {foreach $post_error as $err}
@@ -19,6 +19,15 @@
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
             <br />
             <br />
+            <div id="output">
+                <div id="output_text">
+                </div>
+                <div class="progress" style="width: 40%; visibility: hidden;">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" id="output_pgb" style="width: 100%;">
+                        100%
+                    </div>
+                </div>
+            </div>
             {include file="../../textarea.tpl"}
             <input type="hidden" name="post_content" id="post_content" value="">
             <div style="width: 80%; min-height: 250px; border: 1px solid #269abc;" id="editor">
@@ -30,6 +39,6 @@
         <div id="uploadlog">
         </div>
     {/if}
-    
-    <div id="output"></div>
+
+
 </div>

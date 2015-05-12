@@ -24,5 +24,5 @@ $_SETTINGS = array(
     "mod_rewrite" => false, //Whether or not the webpage is using mod_rewrite or not
     "MAX_POST_SIZE" => 5000, //The maximum number of characters a post can contain
     "MAX_TITLE_SIZE" => 50, //The maximum number of characters a post title can contain
-    "MAX_FILE_SIZE" => 25600, //The maximum number of bytes an attached image can contain, default: 25mb
+    "MAX_FILE_SIZE" => 25600000, //The maximum number of bytes an attached image can contain, default: 25mb
 );
