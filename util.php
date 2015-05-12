@@ -446,6 +446,8 @@ function get_time_ago_string($time_stamp, $divisor, $time_unit) {
  *
  * @param unknown $posts        	
  * @return multitype:unknown
+ *
+ * Sjekker om postverdien fra søkefelt finnes i tittel eller innohold av postene og retunrer at array med de postene.
  */
 function search($posts) {
 	$search = array ();
