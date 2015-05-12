@@ -119,11 +119,12 @@ class Post {
 	
 	/**
 	 * Get the number of posts in the datbase
+	 *
 	 * @return multitype:mixed
 	 */
 	static function getPostCount() {
 		$stmt = getDB ()->query ( "SELECT COUNT(*) FROM posts" );
-		return $stmt->fetch()["COUNT(*)"];
+		return $stmt->fetch ()["COUNT(*)"];
 	}
 	
 	/**
@@ -153,6 +154,7 @@ class Post {
 					"poster" => $this->poster 
 			) );
 			$this->id = getDB ()->lastInsertId ();
+			Log::post ( "INSERT", "POST(<a href='" . makeLink("blog", "view", array("$this->id")) . "'>" . $this->title . "</a>) was created.", session("userId") );
 			return $this->id;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -172,6 +174,7 @@ class Post {
 			$stmt->execute ( array (
 					"id" => $id 
 			) );
+			Log::post ( "DELETE", "POST(" . $id . ") was deleted.", session ( "userId" ) );
 			return true;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -191,6 +194,7 @@ class Post {
 		try {
 			$stmt = getDB ()->prepare ( "UPDATE posts SET title='$title', content='$content', edit_date=Now() WHERE ID=$id" );
 			$stmt->execute ();
+			Log::post ( "UPDATE", "POST(<a href='" . makeLink("blog", "view", array("$id")) . "'>" . $title . "</a>) was updated.", session("userId") );
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}

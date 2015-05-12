@@ -24,10 +24,11 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					{strip}
-					<li class="{$sidebar0}"><a href="{$links.admin_overview}">Overview</a></li>
-					<li class="{$sidebar1}"><a href="{$links.admin_posts}">Posts</a></li>
-					<li class="{$sidebar2}"><a href="{$links.admin_users}">Users</a></li>
-					<li class="{$sidebar3}"><a href="{$links.admin_configuration}">Configuration</a></li>
+					<li class="{$sidebar0}"><a href="{makeLink("admin", "overview")}">Overview</a></li>
+					<li class="{$sidebar1}"><a href="{makeLink("admin", "posts")}">Posts</a></li>
+					<li class="{$sidebar2}"><a href="{makeLink("admin", "users")}">Users</a></li>
+					<li class="{$sidebar3}"><a href="{makeLink("admin", "log")}">Logs</a></li>
+					<li class="{$sidebar4}"><a href="{makeLink("admin", "configuration")}">Configuration</a></li>
 					{/strip}
 				</ul>
 				<ul class="nav nav-sidebar">

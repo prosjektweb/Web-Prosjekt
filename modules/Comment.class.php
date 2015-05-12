@@ -61,6 +61,7 @@ class Comment {
 			$stmt->execute ( array (
 					"id" => $id 
 			) );
+			Log::post ( "DELETE", "Comment(" . $id . ") was deleted.", session ( "userId" ) );
 			return true;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -88,24 +89,6 @@ class Comment {
 	}
 	
 	/**
-	 * Removes the comment with the specified id
-	 *
-	 * @param unknown $id        	
-	 * @return boolean
-	 */
-	static function removeComment($id) {
-		try {
-			$stmt = getDB ()->prepare ( "DELETE FROM comments WHERE id= ?" );
-			$stmt->bindParam ( 1, $id );
-			$stmt->execute ();
-			return true;
-		} catch ( Exception $ex ) {
-			setSession ( "error", $ex->getMessage () );
-		}
-		return false;
-	}
-	
-	/**
 	 * Creates a new comment using the specified values
 	 *
 	 * @param unknown $post_id        	
@@ -129,7 +112,7 @@ class Comment {
 			) );
 			$comment->id = getDB ()->lastInsertId ();
 			
-			Log::log ( "INSERT", "Comment(" . $comment->id . ") was created.", $poster );
+			Log::post ( "INSERT", "Comment(" . $comment->id . ") was created for POST(<a href='" . makeLink("blog", "view", array("$post_id")) . "'>" . Post::get($post_id)->title . "</a>).", $poster );
 			return $comment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );

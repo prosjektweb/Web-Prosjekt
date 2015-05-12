@@ -84,11 +84,11 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 		}
 	}
 	
-	$usersPerPage = 10;
-	$offset = hasArg ( 0 ) && is_numeric ( getArg ( 0 ) ) ? (getArg ( 0 ) - 1) * $usersPerPage : "0";
+	$logEntriesPerPage = 10;
+	$offset = hasArg ( 0 ) && is_numeric ( getArg ( 0 ) ) ? (getArg ( 0 ) - 1) * $logEntriesPerPage : "0";
 	
 	// Load all users
-	$users = User::loadUsers ( "LIMIT $usersPerPage OFFSET $offset" );
+	$users = User::loadUsers ( "LIMIT $logEntriesPerPage OFFSET $offset" );
 	
 	// Assign all users to smarty
 	$smartyUsers = array ();
@@ -102,6 +102,6 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 				"activationkey" => $user->activationkey 
 		);
 	}
-	$smarty->assign ( "pagination", (User::getUserCount () / $usersPerPage) );
+	$smarty->assign ( "pagination", (User::getUserCount () / $logEntriesPerPage) );
 	$smarty->assign ( "users", $smartyUsers );
 }

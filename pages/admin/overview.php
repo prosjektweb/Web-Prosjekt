@@ -13,7 +13,7 @@ try {
 	while ( ($row = $stmt->fetch ()) != false ) {
 		
 		$smartyData [] = array (
-				"label" => Post::get($row["arg_0"])->title,
+				"label" => "<a style=\"color: #fff;\" href=\"" . makeLink("blog", "view", array($row["arg_0"])) . "\">" . Post::get($row["arg_0"])->title . "</a>" ,
 				"value" => $row ["hit_count"] 
 		);
 	}

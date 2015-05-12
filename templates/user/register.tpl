@@ -22,11 +22,11 @@
                 {/if}
                 <form class="form-signin" style="margin-right: 40%;" action="{$links.user_register}" method="POST">
 
-                    <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" id="usernameInput" name="usernameInput" class="form-control" placeholder="Username" value="{postFilter("usernameInput")}" required autofocus>
                     <br />
-                    <input type="email" id="emailInput" name="emailInput" class="form-control" placeholder="Email address" required>
+                    <input type="email" id="emailInput" name="emailInput" class="form-control"  placeholder="Email address" value="{postFilter("emailInput")}" required>
                     <br />
-                    <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" required >
+                    <input type="email" id="emailRetype" name="emailRetype" class="form-control" placeholder="Re-type email address" value="{postFilter("emailRetype")}" required >
                     <br />
                     <input type="password" id="passwordInput" name="passwordInput" class="form-control" placeholder="Password" required>
                     <br />

@@ -13,7 +13,8 @@
 				<h3 class="panel-title">Site view statistics</h3>
 			</div>
 			<div class="panel-body">
-				<div id="placeholder" style="width: 550px; height: 300px"></div>
+				<div id="placeholder" style="width: 550px; height: 300px">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -52,7 +53,8 @@
 		        }
 		    },
 		    legend: {
-		        show: true
+		        show: false
+		        
 		    }
 		});
 		{/literal}

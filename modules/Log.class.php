@@ -35,15 +35,36 @@ class Log {
 	var $user;
 	
 	/**
+	 * The date of which the entry was posted
+	 * @var timestamp
+	 */
+	var $date;
+	
+	/**
+	 * Get the number of log entries in the datbase
+	 *
+	 * @return multitype:mixed
+	 */
+	static function getLogCount() {
+		try {
+			$stmt = getDB ()->query ( "SELECT COUNT(*) FROM log" );
+			return $stmt->fetch ()["COUNT(*)"];
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return 0;
+	}
+	
+	/**
 	 * Log's something to the database
 	 *
 	 * @param string $action        	
 	 * @param string $message        	
 	 * @param int $user        	
 	 */
-	static function log($action, $message, $user) {
+	static function post($action, $message, $user) {
 		try {
-			$stmt = getDB ()->prepare ( "INSERT INTO log (action, message, user) VALUES(?, ?, ?)" );
+			$stmt = getDB ()->prepare ( "INSERT INTO log (action, message, user, date) VALUES(?, ?, ?, NOW())" );
 			bindParams ( $stmt, array (
 					$action,
 					$message,
@@ -67,8 +88,10 @@ class Log {
 			while ( ($entry = $stmt->fetchObject ( "Log" )) ) {
 				$entries [] = $entry;
 			}
+			return $entries;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}
+		return array ();
 	}
 }

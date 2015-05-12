@@ -142,9 +142,9 @@ if (getArg ( 0 ) == "new") {
 		}
 	}
 	// Get all posts
-	$usersPerPage = 10;
-	$offset = hasArg ( 0 ) && is_numeric(getArg(0)) ? (getArg ( 0 ) - 1) * $usersPerPage : "0";
-	$posts = Post::getPosts ( " LIMIT " . $usersPerPage . " OFFSET " . $offset );
+	$logEntriesPerPage = 10;
+	$offset = hasArg ( 0 ) && is_numeric(getArg(0)) ? (getArg ( 0 ) - 1) * $logEntriesPerPage : "0";
+	$posts = Post::getPosts ( " LIMIT " . $logEntriesPerPage . " OFFSET " . $offset );
 	$smartyPosts = array ();
 	for($i = 0; $i < sizeof ( $posts ); $i ++) {
 		$post = $posts [$i];
@@ -156,7 +156,7 @@ if (getArg ( 0 ) == "new") {
 				"content" => $post->getContent () 	
 		);
 	}
-	$smarty->assign ( "pagination", (Post::getPostCount () / $usersPerPage) );
+	$smarty->assign ( "pagination", (Post::getPostCount () / $logEntriesPerPage) );
 	$smarty->assign ( "posts", $smartyPosts );
 	$smarty->assign ( "page", "admin/posts.tpl" );
 }
