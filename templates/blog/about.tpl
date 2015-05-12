@@ -29,7 +29,7 @@
                 <h2 class="blog-post-title">
                     <a href="#">Steffen Evensen</a>
                 </h2>
-                <img src="http://kark.hin.no/~501669/prosjekt/web/ajax/image/view.php?id=29" class="img-thumbnail" alt="128x128" style="width: 128px; height: 128px;">
+                <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpf1/v/t1.0-1/c0.0.160.160/p160x160/10463969_10152161260631507_6462037358230444228_n.jpg?oh=a884483c0ed05d726135b2cbf3e27f5e&oe=55C6793D&__gda__=1438944619_5a0630ff524940ad279cd6e15a414562" class="img-thumbnail" alt="128x128" style="width: 128px; height: 128px;">
                 Har jobbet med javascript!&nbsp;<img src="http://icons.iconarchive.com/icons/hopstarter/adobe-cs4/64/File-Adobe-Dreamweaver-JavaScript-icon.png" /><br />
                 
             </div>
