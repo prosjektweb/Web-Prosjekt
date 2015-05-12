@@ -18,23 +18,41 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 			
 			$user = User::load ( $user_id );
 			
-			if (hasPost ( "user_forgotkey" )) {
-				$user->forgotkey = getPost ( "user_forgotkey" );
-			}
-			if (hasPost ( "user_actionvationkey" )) {
-				$user->activationkey = getPost ( "user_activationkey" );
-			}
-			if (hasPost ( "user_username" )) {
-				$user->username = getPost ( "user_username" );
-			}
-			if (hasPost ( "user_email" )) {
-				$user->email = getPost ( "user_email" );
+			if (hasArg ( 2 ) && getArg ( 2 ) == "submit") {
+				$user->forgotkey = postFilter ( "user_forgotkey" );
+				$user->activationkey = postFilter ( "user_activationkey" );
+				$user->username = postFilter ( "user_username" );
+				$user->email = postFilter ( "user_email" );
+				
+				$newpass1 = postFilter ( "user_newpassword" );
+				$newpass2 = postFilter ( "user_newpassword_retype" );
+				
+				if ($newpass1 != "") {
+					if ($newpass1 != $newpass2) {
+						$error [] = "Passwords does not match.";
+					} else {
+						if (strlen ( $newpass1 ) > 2) {
+							// Create salt for password protection
+							$salt = User::rand_salt ( 16 );
+							// Encrypt password with sha1.
+							$password = sha1 ( $newpass1 . $salt );
+							$user->password = $password;
+							$user->salt = $salt;
+						} else {
+							$error [] = "Password must have a length greater than 2 characters.";
+						}
+					}
+				}
+				
+				if ($user->username == "") {
+					$error [] = "Username can't be empty.";
+				}
+				
 				if (! validate_email ( $user->email )) {
 					$error [] = "Invalid E-Mail";
 				}
-			}
-			if (sizeof ( $error ) == 0) {
-				if (hasArg ( 2 ) && getArg ( 2 ) == "submit") {
+				
+				if (sizeof ( $error ) == 0) {
 					$user->update ();
 					$smarty->assign ( "form_ok", "true" );
 				}

@@ -16,6 +16,12 @@ function smarty_set_user_session() {
 			"username" => isLoggedIn () ? session ( "username" ) : "" 
 	) );
 }
+
+/**
+ *
+ * @author 501669
+ *        
+ */
 class User {
 	var $id;
 	var $email;
@@ -50,7 +56,7 @@ class User {
 	 */
 	function update() {
 		try {
-			$stmt = getDB ()->prepare ( "UPDATE users SET username=:username, password=:password, group_id=:group_id, activationkey=:activation_key, forgotkey=:forgot_key, salt=:salt WHERE id=:id" );
+			$stmt = getDB ()->prepare ( "UPDATE users SET username=:username, password=:password, group_id=:group_id, activationkey=:activationkey, forgotkey=:forgotkey, salt=:salt WHERE id=:id" );
 			$stmt->execute ( array (
 					"username" => $this->username,
 					"password" => $this->password,
@@ -419,11 +425,10 @@ class User {
 	
 	/**
 	 *
-	 * @param
-	 *        	$username
-	 *        	
-	 * @param $forgotkey Update
-	 *        	forgotkey on user.
+	 * @param string $username        	
+	 *
+	 * @param string $forgotkey
+	 *        	Update forgotkey on user.
 	 */
 	static function update_forgotkey($username, $forgotkey) {
 		try {
@@ -440,10 +445,9 @@ class User {
 	
 	/**
 	 *
-	 * @param
-	 *        	$username
-	 * @param $password Update
-	 *        	password for user.
+	 * @param string $username        	
+	 * @param string $password
+	 *        	Update password for user.
 	 */
 	static function update_password($username, $password) {
 		try {
