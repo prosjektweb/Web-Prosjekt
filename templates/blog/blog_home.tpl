@@ -16,31 +16,33 @@
                         <div class="blog-post">
                             <h2 class="blog-post-title"><a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a></h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="/user/{$post.poster}">{$post.poster|capitalize}</a></p>
-                            {textarea_filter({$post.content})}
+                                {textarea_filter({$post.content})}
                         </div>
                     {/foreach}
                 {else}
                     {foreach $posts as $post}
                         <div class="blog-post">
                             <h2 class="blog-post-title">
-                            	<a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a>
-                            	<div style="float: right;">
-                           			<a href="{makeLink("admin", "posts", array("edit", "", "{$post.id}"))}">
-	                            		<span style="font-size: 24px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-	                            	</a>
-	                            	&nbsp;
-	                            	<a href="javascript:doDelete('{makeLink("admin", "posts", array("delete", "{$post.id}"))}')">
-	                            		<span style="font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-	                            	</a>
-                            	</div>
+                                <a href='{makeLink("blog", "view", array( $post.id ))}'>{$post.title}</a>
+                                {if $user.isAdmin eq "true"}
+                                    <div style="float: right;">
+                                        <a href="{makeLink("admin", "posts", array("edit", "", "{$post.id}"))}">
+                                            <span style="font-size: 24px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </a>
+                                        &nbsp;
+                                        <a href="javascript:doDelete('{makeLink("admin", "posts", array("delete", "{$post.id}"))}')">
+                                            <span style="font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                {/if}
                             </h2>
                             <p class="blog-post-meta">{$post.postdate} by <a href="{makeLink("user", "view", array("{$post.poster}"))}">{$post.poster|capitalize}</a></p>
-                            {textarea_filter({$post.content})}
+                                {textarea_filter({$post.content})}
                         </div>
-                        
+
                         <p id="post-{$post.id}-comments" class="blog-post-meta">
-							- <a href="javascript:loadComments('{$root}/ajax/comment/list.php?post_id={$post.id}', {$post.id})">{$post.numcomments} comments</a>
-						</p>		
+                            - <a href="javascript:loadComments('{$root}/ajax/comment/list.php?post_id={$post.id}', {$post.id})">{$post.numcomments} comments</a>
+                        </p>		
                     {/foreach}
                 {/if}
             {/strip}

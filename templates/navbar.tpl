@@ -24,7 +24,7 @@
                     <button type="submit" class="btn btn-success">Sign Out</button>
                 </form>
                 <div class="blog-nav-item navbar-right">
-                    Hello {$user.displayName|capitalize}. 
+                    Hello {$user.username|capitalize}. 
                 </div>
             {/if}
 

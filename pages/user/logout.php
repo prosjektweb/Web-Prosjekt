@@ -4,7 +4,6 @@ global $smarty;
 
 //Destroy all session data
 unsetSession("userId");
-unsetSession("user");
 unsetSession("username");
 unsetSession("group_id");
 

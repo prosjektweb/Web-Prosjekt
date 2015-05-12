@@ -1,11 +1,11 @@
 <?php
 
 if (!isLoggedIn()) {
-	headerRedirect(makeLink("user", "login"));
+    headerRedirect(makeLink("user", "login"));
 }
 if (!isAdmin()) {
-	setSession("error", "Unauthorized.");
-	return;
+    setSession("error", "Unauthorized.");
+    return;
 }
 
 //Assign body
@@ -19,6 +19,6 @@ addLink("admin_configuration", "admin", "configuration");
 addLink("admin_overview", "admin", "overview");
 
 //Assign sidebars
-for($i=0; $i < 4; $i++) {
-	$smarty->assign("sidebar" . $i, "none");
+for ($i = 0; $i < 4; $i++) {
+    $smarty->assign("sidebar" . $i, "none");
 }

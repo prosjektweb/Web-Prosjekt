@@ -14,6 +14,12 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- WebProsjekt Core JavaScript plugins -->
+<script src="{$root}/js/WebProsjekt.core.js"></script>
+<script type="text/javascript">
+    wp_set_root("{$root}");
+</script>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

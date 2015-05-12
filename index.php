@@ -1,42 +1,6 @@
 <?php
-
-session_start();
-// Utilities
-include ("util.php");
-// Blog module
-include ("modules/Blog.php");
 // Smarty module
-require 'modules/smarty/libs/Smarty.class.php';
-
-// Configuration
-require 'config.php';
-
-// Load SQL
-require 'modules/sql.php';
-
-require 'modules/Hitcount.class.php';
-
-// Create our Smarty object
-global $smarty;
-
-$smarty = new Smarty ();
-
-// Options
-$smarty->debugging = false;
-$smarty->caching = false;
-
-// Set some path urls because of mod rewrite
-$smarty->assign("root", $ROOT_DIR);
-
-// Set some global vars
-$smarty->assign("webpage", array(
-    "title" => $_SETTINGS ['title']
-));
-
-// Load user
-if (hasSession("userId")) {
-    setSession("user", User::load(session("userId")));
-}
+require (dirname ( __FILE__ ) . "/" . '/modules/Init.common.php');
 
 // Set default body
 $smarty->assign("body", "body.tpl");
@@ -135,13 +99,6 @@ if (!$didInclude) {
 Hitcount::doHitcount($page, $file, getArg(0));
 $hits = Hitcount::getHitcount($page, $file, getArg(0));
 $smarty->assign("hits", $hits);
-
-// Assign user values last so that any session edits will be noticed
-$smarty->assign("user", array(
-    "isAdmin" => "true",
-    "isSignedIn" => hasSession("userId") ? "true" : "false",
-    "displayName" => hasSession("userId") ? (session("user")->getUsername()) : ""
-));
 
 /**
  * Assign links

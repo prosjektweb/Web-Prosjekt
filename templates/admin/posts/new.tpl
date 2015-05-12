@@ -13,6 +13,7 @@
         </div>
     {else}
         <script type="text/javascript" src="{$root}/js/admin.js"></script>
+        <script type="text/javascript" src="{$root}/js/jquery.upload.js"></script>
         <form action="{makeLink("admin", "posts", array( "new", "submit" ))}" method="POST">
             <h4>Title:</h4>
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
@@ -29,4 +30,6 @@
         <div id="uploadlog">
         </div>
     {/if}
+    
+    <div id="output"></div>
 </div>
