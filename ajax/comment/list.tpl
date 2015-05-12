@@ -2,24 +2,28 @@
 	<div id="comment-{$post_id}-container">
 		<h3>Comments</h3>
 		<hr>
-		{strip} 
-			{foreach $comments as $comment}
-				<div id="comment-{$comment.id}" class="well">
-					<div style="float: left; padding: 6px; margin-right: 5px; background-color: #333;"><span style="font-size: 32px;" class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-					<div style="font-size: 16px;">
-						<i>{$comment.poster|capitalize} - {$comment.timesince}</i>
-						{if $user.isAdmin eq "true"}
-							<div style="float: right; text-align: right;">
-								<a href="javascript:deleteComment('{$root}/ajax/comment/delete.php?comment_id={$comment.id}', {$comment.id})"><span style="font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-							</div>
-						{/if}
+		{if sizeof($comments) eq '0'}
+			No comments as of yet!
+		{else}
+			{strip} 
+				{foreach $comments as $comment}
+					<div id="comment-{$comment.id}" class="well">
+						<div style="float: left; padding: 6px; margin-right: 5px; background-color: #333;"><span style="font-size: 32px;" class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+						<div style="font-size: 16px;">
+							<i>{$comment.poster|capitalize} - {$comment.timesince}</i>
+							{if $user.isAdmin eq "true"}
+								<div style="float: right; text-align: right;">
+									<a href="javascript:deleteComment('{$root}/ajax/comment/delete.php?comment_id={$comment.id}', {$comment.id})"><span style="font-size: 24px; color: #f00;" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+								</div>
+							{/if}
+						</div>
+						<div style="word-wrap: break-word; color: #333;">{$comment.content}</div>
+						
+						<div style='clear: both;'></div>
 					</div>
-					<div style="word-wrap: break-word; color: #333;">{$comment.content}</div>
-					
-					<div style='clear: both;'></div>
-				</div>
-			{/foreach} 
-		{/strip}
+				{/foreach} 
+			{/strip}
+		{/if}
 		<br />
 		{if isLoggedIn() eq "true"}
 		<h4>Leave a comment:</h4>

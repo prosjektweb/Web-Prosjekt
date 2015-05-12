@@ -8,6 +8,20 @@ $smarty->assign ( "form_ok", "false" );
 
 if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 	
+	// Get all the group names
+	$groups = Group::getGroups ();
+	
+	
+	$smartyGroups = array ();
+	foreach ( $groups as $group ) {
+		$smartyGroups[] = array (
+				"name" => $group->name,
+				"id" => $group->id 
+		);
+	}
+
+	$smarty->assign ( "groups", $smartyGroups );
+	
 	setPage ( "admin/users/edit.tpl" );
 	
 	$error = array ();
@@ -23,6 +37,9 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 				$user->activationkey = postFilter ( "user_activationkey" );
 				$user->username = postFilter ( "user_username" );
 				$user->email = postFilter ( "user_email" );
+				$user->group_id = postFilter ( "user_group" );
+				
+				echo postFilter( "user_group" );
 				
 				$newpass1 = postFilter ( "user_newpassword" );
 				$newpass2 = postFilter ( "user_newpassword_retype" );
@@ -99,7 +116,8 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 				"email" => $user->email,
 				"group_id" => $user->group_id,
 				"forgotkey" => $user->forgotkey,
-				"activationkey" => $user->activationkey 
+				"activationkey" => $user->activationkey,
+				"group" => Group::getGroupName ( $user->group_id ) 
 		);
 	}
 	$smarty->assign ( "pagination", (User::getUserCount () / $logEntriesPerPage) );

@@ -7,6 +7,7 @@
 					<th>#</th>
 					<th>Username</th>
 					<th>E-Mail</th>
+					<th>Group</th>
 					<th>Options</th>
 					<th></th>
 					<th></th>
@@ -18,6 +19,7 @@
 					<td>{$user.id}</td>
 					<td>{$user.username|truncate}</td>
 					<td>{$user.email}</td>
+					<td>{$user.group}</td>
 					<td><button type="button" onClick="wp_redirect('{makeLink("admin", "users", array("edit", "{$user.id}"))}');" class="btn btn-success">Edit</button></td>
 					<td><button type="button"
 							onClick="wp_do_confirm('Are you sure you want to delete this user?', '{makeLink("admin", "users", array("delete", {$user.id}))}');" class="btn btn-danger">Delete</button></td>

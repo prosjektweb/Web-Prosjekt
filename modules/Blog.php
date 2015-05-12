@@ -13,3 +13,5 @@ require dirname(__FILE__) . "/" . 'Post.class.php';
 require dirname(__FILE__) . "/" . 'Hitcount.class.php';
 
 require dirname(__FILE__) . "/" . 'Log.class.php';
+
+require dirname(__FILE__) . "/" . 'Group.class.php';

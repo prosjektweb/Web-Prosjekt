@@ -23,13 +23,61 @@ function smarty_set_user_session() {
  *        
  */
 class User {
+	
+	/**
+	 * The id of the user
+	 *
+	 * @var number
+	 */
 	var $id;
+	
+	/**
+	 * The email of the user
+	 *
+	 * @var string
+	 */
 	var $email;
+	
+	/**
+	 * The username of the user
+	 *
+	 * @var string
+	 */
 	var $username;
+	
+	/**
+	 * The hashed password of the user
+	 *
+	 * @var string
+	 */
 	var $password;
+	
+	/**
+	 * The group id of the user
+	 *
+	 * @var number
+	 */
 	var $group_id;
+	
+	/**
+	 * The activation key of the user
+	 *
+	 * @var string
+	 */
 	var $activationkey;
+	
+	/**
+	 * The forgot key of the user
+	 *
+	 * @var string
+	 */
 	var $forgotkey;
+	
+	/**
+	 * The salt of the user
+	 *
+	 * @var string
+	 */
 	var $salt;
 	
 	/**
@@ -39,14 +87,28 @@ class User {
 	}
 	
 	/**
-	 * G
+	 * Get the id of this user
+	 *
+	 * @return number
 	 */
 	function getId() {
 		return $this->id;
 	}
+	
+	/**
+	 * Get the username of this user
+	 *
+	 * @return string
+	 */
 	function getUsername() {
 		return $this->username;
 	}
+	
+	/**
+	 * Get the group id of this users
+	 *
+	 * @return number
+	 */
 	function getGroupId() {
 		return $this->group_id;
 	}

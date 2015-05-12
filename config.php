@@ -3,10 +3,10 @@
 /**
  * SQL Credentials
  */
-$SQL_SERVER = "landsofsonketo.com";
-$SQL_USERNAME = "webprosjekt";
-$SQL_PASSWORD = "webprosjekt2015";
-$SQL_DATABASE = "webprosjekt";
+$SQL_SERVER = "127.0.0.1";
+$SQL_USERNAME = "evensen";
+$SQL_PASSWORD = "evensen";
+$SQL_DATABASE = "stud_v15_evensen";
 
 /**
  * Root URL to the website
@@ -14,7 +14,7 @@ $SQL_DATABASE = "webprosjekt";
  * It is not recommended to use a trailing slash / as this will cause 
  * the generated URL's to have two of them Eg: http://localhost/web-prosjekt//file.php
  */
-$ROOT_DIR = "http://localhost/web-prosjekt";
+$ROOT_DIR = "http://kark.hin.no/~501669/prosjekt/web";
 
 /**
  * Some global settings for the system

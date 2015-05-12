@@ -4,35 +4,35 @@ class Post {
 	/**
 	 * The id of this post
 	 *
-	 * @var type
+	 * @var number
 	 */
 	var $id;
 	
 	/**
 	 * The title of this post
 	 *
-	 * @var type
+	 * @var string
 	 */
 	var $title;
 	
 	/**
 	 * The contents of this post
 	 *
-	 * @var type
+	 * @var string
 	 */
 	var $content;
 	
 	/**
 	 * The date this post was created
 	 *
-	 * @var type
+	 * @var string timestamp
 	 */
 	var $post_date;
 	
 	/**
 	 * The last date this post was modified
 	 *
-	 * @var type
+	 * @var string timestamp
 	 */
 	var $edit_date;
 	
@@ -46,17 +46,20 @@ class Post {
 	/**
 	 * The comment count of this post
 	 *
-	 * @var unknown
+	 * @var number
 	 */
 	var $comment_count = null;
 	
 	/**
-	 * Constructor
+	 * Empty ctor
 	 */
 	function __construct() {
 	}
 	
 	/**
+	 * Get the amount of comments for this Post
+	 *
+	 * @return unknown
 	 */
 	function getCommentCount() {
 		if ($this->comment_count == null) {
@@ -68,6 +71,8 @@ class Post {
 	
 	/**
 	 * Creates an array with the information smarty want's from our post!
+	 *
+	 * @return array
 	 */
 	function getSmartyArray() {
 		return array (
@@ -81,10 +86,14 @@ class Post {
 	}
 	
 	/**
+	 * Set the values of this Post class
 	 *
-	 * @param type $title        	
-	 * @param type $content        	
-	 * @param type $poster        	
+	 * @param string $title
+	 *        	The title of the Post
+	 * @param string $content
+	 *        	The contents of the Post
+	 * @param number $poster
+	 *        	The id of the user that posted the Post
 	 */
 	function setValues($title, $content, $poster) {
 		$this->id = 0;
@@ -94,15 +103,16 @@ class Post {
 	}
 	
 	/**
+	 * Get the post with the given id or null if none was found
 	 *
 	 * @param
 	 *        	$which
-	 * @return array
+	 * @return Post
 	 */
-	static function get($which) {
+	static function get($id) {
 		try {
 			$stmt = getDB ()->prepare ( "SELECT * FROM posts WHERE id= ?" );
-			$stmt->bindParam ( 1, $which );
+			$stmt->bindParam ( 1, $id );
 			$stmt->execute ();
 			
 			$post = $stmt->fetchObject ( "Post" );
@@ -120,7 +130,7 @@ class Post {
 	/**
 	 * Get the number of posts in the datbase
 	 *
-	 * @return multitype:mixed
+	 * @return number
 	 */
 	static function getPostCount() {
 		$stmt = getDB ()->query ( "SELECT COUNT(*) FROM posts" );
@@ -128,8 +138,9 @@ class Post {
 	}
 	
 	/**
+	 * Get all the posts that satisfies the given parameter, or all posts if none was specified
 	 *
-	 * @param type $where        	
+	 * @param string $where        	
 	 */
 	static function getPosts($where = null) {
 		$resultat = getDB ()->query ( "SELECT * FROM posts ORDER BY post_date desc " . ($where != null ? $where : "") . ";" );
@@ -141,8 +152,9 @@ class Post {
 	}
 	
 	/**
+	 * Inserts a new Post into the database
 	 *
-	 * @return type
+	 * @return number The id of the post that was inserted
 	 */
 	function insert() {
 		try {
@@ -154,7 +166,9 @@ class Post {
 					"poster" => $this->poster 
 			) );
 			$this->id = getDB ()->lastInsertId ();
-			Log::post ( "INSERT", "POST(<a href='" . makeLink("blog", "view", array("$this->id")) . "'>" . $this->title . "</a>) was created.", session("userId") );
+			Log::post ( "INSERT", "POST(<a href='" . makeLink ( "blog", "view", array (
+					"$this->id" 
+			) ) . "'>" . $this->title . "</a>) was created.", session ( "userId" ) );
 			return $this->id;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -165,7 +179,7 @@ class Post {
 	/**
 	 * Deletes the post with the given id
 	 *
-	 * @param unknown $id        	
+	 * @param number $id        	
 	 * @return boolean
 	 */
 	static function delete($id) {
@@ -175,6 +189,12 @@ class Post {
 					"id" => $id 
 			) );
 			Log::post ( "DELETE", "POST(" . $id . ") was deleted.", session ( "userId" ) );
+			
+			$stmt = getDB ()->prepare ( "DELETE FROM Pages WHERE page='blog' AND file='view' AND arg_0 = :id" );
+			$stmt->execute ( array (
+					"id" => $id 
+			) );
+			
 			return true;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -185,16 +205,18 @@ class Post {
 	/**
 	 * Updates the post with the given id
 	 *
-	 * @param unknown $id        	
-	 * @param unknown $title        	
-	 * @param unknown $content        	
+	 * @param number $id        	
+	 * @param string $title        	
+	 * @param string $content        	
 	 * @return number
 	 */
 	static function edit($id, $title, $content) {
 		try {
 			$stmt = getDB ()->prepare ( "UPDATE posts SET title='$title', content='$content', edit_date=Now() WHERE ID=$id" );
 			$stmt->execute ();
-			Log::post ( "UPDATE", "POST(<a href='" . makeLink("blog", "view", array("$id")) . "'>" . $title . "</a>) was updated.", session("userId") );
+			Log::post ( "UPDATE", "POST(<a href='" . makeLink ( "blog", "view", array (
+					"$id" 
+			) ) . "'>" . $title . "</a>) was updated.", session ( "userId" ) );
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
 		}
@@ -202,48 +224,54 @@ class Post {
 	}
 	
 	/**
+	 * Get the id of the post
 	 *
-	 * @return type
+	 * @return number
 	 */
 	function getId() {
 		return $this->id;
 	}
 	
 	/**
+	 * Get the title of the post
 	 *
-	 * @return type
+	 * @return string
 	 */
 	function getTitle() {
 		return $this->title;
 	}
 	
 	/**
+	 * Get the content of the post
 	 *
-	 * @return type
+	 * @return string
 	 */
 	function getContent() {
 		return $this->content;
 	}
 	
 	/**
+	 * Get the post date of the post
 	 *
-	 * @return type
+	 * @return string a string in sql timestamp format
 	 */
 	function getPostDate() {
 		return $this->post_date;
 	}
 	
 	/**
+	 * Get the edit date of the post
 	 *
-	 * @return type
+	 * @return string a string in sql timestamp format
 	 */
 	function getEditDate() {
 		return $this->edit_date;
 	}
 	
 	/**
+	 * Get the id of the user that posted this post
 	 *
-	 * @return type
+	 * @return number
 	 */
 	function getPoster() {
 		return $this->poster;

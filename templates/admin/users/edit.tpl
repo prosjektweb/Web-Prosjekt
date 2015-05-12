@@ -17,6 +17,12 @@
             <input type="text" name="user_username" placeholder="Enter Username" value="{$edituser.username}"/>
             <h4>E-Mail:</h4>
             <input type="text" name="user_email" placeholder="Enter E-Mail" value="{$edituser.email}"/>
+            <h4>Group:</h4>
+            <select name="user_group">
+            {foreach $groups as $group}
+            	<option value="{$group.id}" {if {$edituser.group_id} eq {$group.id}}selected{/if}>{$group.name}</option>
+            {/foreach}
+            </select>
             <h4>Forgot Key:</h4>
             <input type="text" name="user_forgotkey" placeholder="Enter forgot-key" value="{$edituser.forgotkey}"/>
             <h4>Activation Key:</h4>

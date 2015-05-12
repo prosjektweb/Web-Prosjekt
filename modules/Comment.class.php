@@ -57,11 +57,18 @@ class Comment {
 	 */
 	static function delete($id) {
 		try {
+			$comment = Comment::loadComment ( $id );
+			
+			$log = "COMMENT(" . substr ( $comment->content, 0, strlen ( $comment->content ) > 15 ? 15 : strlen ( $comment->content ) ) . ")";
+			$log .= " by USER(" . User::getUsernameById($comment->poster) . ")";
+			$log .= " in POST(<a href='" . makeLink ( "blog", "view", array ("$comment->post_id" ) ) . "'>" . Post::get ( $comment->post_id )->title . "</a>)";
+			$log .= " was deleted.";
+			
+			Log::post ( "DELETE", $log, session ( "userId" ) );
 			$stmt = getDB ()->prepare ( "DELETE FROM comments WHERE id = :id" );
 			$stmt->execute ( array (
 					"id" => $id 
 			) );
-			Log::post ( "DELETE", "Comment(" . $id . ") was deleted.", session ( "userId" ) );
 			return true;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -112,7 +119,9 @@ class Comment {
 			) );
 			$comment->id = getDB ()->lastInsertId ();
 			
-			Log::post ( "INSERT", "Comment(" . $comment->id . ") was created for POST(<a href='" . makeLink("blog", "view", array("$post_id")) . "'>" . Post::get($post_id)->title . "</a>).", $poster );
+			Log::post ( "INSERT", "COMMENT(" . $comment->id . ") was created for POST(<a href='" . makeLink ( "blog", "view", array (
+					"$post_id" 
+			) ) . "'>" . Post::get ( $post_id )->title . "</a>).", $poster );
 			return $comment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
