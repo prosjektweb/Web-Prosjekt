@@ -50,6 +50,25 @@ class Comment {
 	}
 	
 	/**
+	 * Deletes the comment with the given id
+	 *
+	 * @param unknown $id        	
+	 * @return boolean
+	 */
+	static function delete($id) {
+		try {
+			$stmt = getDB ()->prepare ( "DELETE FROM comments WHERE id = :id" );
+			$stmt->execute ( array (
+					"id" => $id 
+			) );
+			return true;
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return false;
+	}
+	
+	/**
 	 * Count the comments of a post
 	 *
 	 * @param unknown $post_id        	
@@ -109,6 +128,8 @@ class Comment {
 					"poster" => $poster 
 			) );
 			$comment->id = getDB ()->lastInsertId ();
+			
+			Log::log ( "INSERT", "Comment(" . $comment->id . ") was created.", $poster );
 			return $comment;
 		} catch ( Exception $ex ) {
 			setSession ( "error", $ex->getMessage () );
@@ -156,7 +177,7 @@ class Comment {
 				return null;
 			}
 			$comment = $stmt->fetchObject ( "Comment" );
-
+			
 			if ($comment) {
 				return $comment;
 			} else {

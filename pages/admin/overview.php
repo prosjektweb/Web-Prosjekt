@@ -7,13 +7,13 @@ $smarty->assign ( "sidebar0", "active" );
 $smartyData = array ();
 
 try {
-	$stmt = getDB ()->prepare ( "SELECT * FROM Pages ORDER BY hit_count DESC LIMIT 5" );
+	$stmt = getDB ()->prepare ( "SELECT * FROM Pages WHERE page='blog' AND file='view' ORDER BY hit_count DESC LIMIT 5" );
 	$stmt->execute ();
 	
 	while ( ($row = $stmt->fetch ()) != false ) {
 		
 		$smartyData [] = array (
-				"label" => $row ["page"] . "_" . $row ["file"],
+				"label" => Post::get($row["arg_0"])->title,
 				"value" => $row ["hit_count"] 
 		);
 	}

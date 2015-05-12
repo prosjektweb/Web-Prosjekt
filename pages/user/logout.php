@@ -8,3 +8,5 @@ unsetSession("username");
 unsetSession("group_id");
 
 $smarty->assign("page", "user/logout.tpl");
+
+smarty_set_user_session();

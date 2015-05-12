@@ -2,6 +2,17 @@
 global $links;
 
 /**
+ * Helper function for SQL PDO operations
+ * @param unknown $stmt
+ * @param unknown $params
+ */
+function bindParams($stmt, $params) {
+	for($i = 0; $i < sizeof ( $params ); $i ++) {
+		$stmt->bindParam ( $i + 1, $params [$i] );
+	}
+}
+
+/**
  * Set the body parameter to smarty
  *
  * @param unknown $body        	
@@ -445,9 +456,7 @@ function get_time_ago_string($time_stamp, $divisor, $time_unit) {
 /**
  *
  * @param unknown $posts        	
- * @return multitype:unknown
- *
- * Sjekker om postverdien fra søkefelt finnes i tittel eller innohold av postene og retunrer at array med de postene.
+ * @return multitype:unknown Sjekker om postverdien fra søkefelt finnes i tittel eller innohold av postene og retunrer at array med de postene.
  */
 function search($posts) {
 	$search = array ();

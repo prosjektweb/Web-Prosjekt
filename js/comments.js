@@ -1,3 +1,18 @@
+function deleteComment(link, id) {
+	if(!confirm("Are you sure you want to delete this comment?")) {
+		return;
+	}
+	var commentDiv = $("#comment-" + id);
+	$.ajax(link).done(function(data){
+		if(data == "true") {
+			commentDiv.fadeOut();
+		} else {
+			alert("Unable to delete comment. :(\r\n" + data);
+		}
+	});
+	
+}
+
 /**
  * Submit a comment
  * 

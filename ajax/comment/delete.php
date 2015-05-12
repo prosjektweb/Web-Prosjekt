@@ -8,4 +8,11 @@ if(!isLoggedIn() || !isAdmin()) {
 }
 
 //DO DELETE STUFF HERE
-//NOW
+$comment_id = getFilter("comment_id");
+
+if($comment_id != "" && is_numeric($comment_id)) {
+	Comment::delete($comment_id);
+	echo "true";
+} else {
+	echo "false";
+}

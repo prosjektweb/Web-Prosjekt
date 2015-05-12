@@ -3,7 +3,6 @@
 require ('../ajax.php');
 //check if we are allowed here!
 if(!isLoggedIn()) {
-	$smarty->display("/comment/login.tpl");
 	return;
 }
 //Parse args
@@ -18,7 +17,7 @@ if($post_id == "" || $comment == "") {
 }
 
 //TODO: add spam filter
-Comment::newComment($post_id, $comment, "1");
+Comment::newComment($post_id, $comment, session("userId"));
 
 //Echo a link
 echo "$ROOT_DIR/ajax/comment/list.php?post_id=$post_id";
