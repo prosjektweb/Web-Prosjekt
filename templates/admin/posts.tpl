@@ -32,4 +32,9 @@
 			</tbody>
 		</table>
 	</div>
+	<ul class="pagination">
+		{for $i=1 to $pagination}
+			<li {if getArg(0) eq $i}class="active"{/if}><a href="{makeLink("admin", "posts", array("$i"))}">{$i}</a></li>
+		{/for}
+	</ul>
 </div>

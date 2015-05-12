@@ -36,7 +36,7 @@
                                     </div>
                                 {/if}
                             </h2>
-                            <p class="blog-post-meta">{$post.postdate} by <a href="{makeLink("user", "view", array("{$post.poster}"))}">{$post.poster|capitalize}</a></p>
+                            <p class="blog-post-meta">{$post.postdate} by {$post.poster|capitalize}</p>
                                 {textarea_filter({$post.content})}
                         </div>
 

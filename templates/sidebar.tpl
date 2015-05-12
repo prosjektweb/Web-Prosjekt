@@ -1,7 +1,7 @@
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module sidebar-module-inset">
         <h4>About</h4>
-        <p>The blog is developed with the use of <a href='http://php.net/'>PHP</a>, <a href='https://www.mysql.com/'>MySQL</a>, <a href='http://www.smarty.net/'>Smarty</a> and <a href='http://getbootstrap.com/'>Bootstrap</a>.
+        <p>The blog is developed with the use of <a href='http://php.net/'>PHP</a>, <a href='https://www.mysql.com/'>MySQL</a>, <a href='http://www.smarty.net/'>Smarty</a>, <a href="http://jquery.com/">jQuery with libraries</a> and <a href='http://getbootstrap.com/'>Bootstrap</a>.
     </div>
     <div class="sidebar-module">
 

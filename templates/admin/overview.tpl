@@ -2,7 +2,7 @@
 	<h1 class="page-header">Overview</h1>
 
 	<div class="col-sm-5">
-		<h2 class="sub-header">Administration Panel</h2>
+		<h4 class="sub-header">Administration Panel</h4>
 		This is the administration page.<br /> There is room for lot's of
 		improvement here, but for now this will have to do.<br />
 		<br /> <b>Enjoy the awesome pie chart!</b>

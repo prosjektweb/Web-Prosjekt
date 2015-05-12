@@ -14,7 +14,7 @@
     {/if}
         <script type="text/javascript" src="{$root}/js/admin.js"></script>
         <script type="text/javascript" src="{$root}/js/jquery.upload.js"></script>
-        <form action="{makeLink("admin", "posts", array( "new", "submit", "{$post.id}"))}" method="POST">
+        <form action="{makeLink("admin", "posts", array( "edit", "submit", "{$post.id}"))}" method="POST">
             <h4>Title:</h4>
             <input type="text" name="post_title" placeholder="Enter Title" value="{$post.title}"/>
             <br />

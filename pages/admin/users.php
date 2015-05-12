@@ -75,8 +75,20 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 	}
 	$smarty->assign ( "form_error", $error );
 } else {
+	
+	if (getArg ( 0 ) == "delete") {
+		$id = htmlspecialchars ( getArg ( 1 ) );
+		if (is_numeric ( $id )) {
+			// Attempt to delete
+			User::delete ( $id );
+		}
+	}
+	
+	$usersPerPage = 10;
+	$offset = hasArg ( 0 ) && is_numeric ( getArg ( 0 ) ) ? (getArg ( 0 ) - 1) * $usersPerPage : "0";
+	
 	// Load all users
-	$users = User::loadUsers ();
+	$users = User::loadUsers ( "LIMIT $usersPerPage OFFSET $offset" );
 	
 	// Assign all users to smarty
 	$smartyUsers = array ();
@@ -90,5 +102,6 @@ if (hasArg ( 0 ) && getArg ( 0 ) == "edit") {
 				"activationkey" => $user->activationkey 
 		);
 	}
+	$smarty->assign ( "pagination", (User::getUserCount () / $usersPerPage) );
 	$smarty->assign ( "users", $smartyUsers );
 }

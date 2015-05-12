@@ -72,6 +72,40 @@ class User {
 	}
 	
 	/**
+	 * Deletes the user with the given id
+	 *
+	 * @param unknown $id        	
+	 * @return boolean
+	 */
+	static function delete($id) {
+		try {
+			$stmt = getDB ()->prepare ( "DELETE FROM users WHERE id = :id" );
+			$stmt->execute ( array (
+					"id" => $id 
+			) );
+			return true;
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return false;
+	}
+	
+	/**
+	 * Get the number of users in the datbase
+	 *
+	 * @return multitype:mixed
+	 */
+	static function getUserCount() {
+		try {
+			$stmt = getDB ()->query ( "SELECT COUNT(*) FROM users" );
+			return $stmt->fetch ()["COUNT(*)"];
+		} catch ( Exception $ex ) {
+			setSession ( "error", $ex->getMessage () );
+		}
+		return 0;
+	}
+	
+	/**
 	 * Get the username of the user with the given $id
 	 *
 	 * @param unknown $id        	
@@ -154,7 +188,7 @@ class User {
 	 */
 	static function loadUsers($where = null) {
 		try {
-			$stmt = getDB ()->prepare ( "SELECT * FROM users " . ($where != null ? "WHERE ?" : "") );
+			$stmt = getDB ()->prepare ( "SELECT * FROM users " . ($where != null ? $where : "") );
 			$stmt->bindParam ( 1, $where );
 			$stmt->execute ();
 			$users = array ();
