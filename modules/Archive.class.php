@@ -2,6 +2,12 @@
 
 class Archive {
 
+    /**
+     * @param $array
+     *
+     * Lager et array som inndeholder ett array for vert år som det er lagret post i basen, hvert av underarayene ingdeholder et felt per måned med poster.
+     * Avslutter med å assigne arrayet til smarty
+     */
     static function setMonths($array) {
         global $smarty;
 
@@ -27,21 +33,13 @@ class Archive {
         $smarty->assign("years", $years);
     }
 
-    /*static function setMonths($array) {
-        global $smarty;
-
-        $months = array();
-        foreach ($array as $post) {
-            $month = (new DateTime($post["postdate"]))->format('m');
-            if (!in_array($month , $months)) {
-                $months[] = $month;
-            }
-        }
-        asort($months);
-
-        $smarty->assign("months", $months);
-    }*/
-
+    /**
+     * @param $array
+     * @param $month
+     * @return array
+     *
+     * Returnerer at array med alle postene i en gitt måned
+     */
     static function getMonthArray($array, $month) {
         $monthArray = array();
 
@@ -54,15 +52,12 @@ class Archive {
         return $monthArray;
     }
 
-    static function generateArchive($array, $datetime) {
-        $month = (new DateTime($datetime))->format('m');
-        foreach ($array as $post) {
-            if ((new DateTime($post["postdate"]))->format('m') == $month) {
-                return $month;
-            }
-        }
-    }
-
+    /**
+     * @param $numMonth
+     * @return string
+     *
+     * Tar inn en måned på nummerformat og retunrere det norske navnet
+     */
     static function monthNumberToString($numMonth) {
 
         switch ($numMonth) {
