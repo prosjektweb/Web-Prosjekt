@@ -56,13 +56,14 @@ class User {
 	 */
 	function update() {
 		try {
-			$stmt = getDB ()->prepare ( "UPDATE users SET username=:username, password=:password, group_id=:group_id, activationkey=:activationkey, forgotkey=:forgotkey, salt=:salt WHERE id=:id" );
+			$stmt = getDB ()->prepare ( "UPDATE users SET username=:username, email=:email, password=:password, group_id=:group_id, activationkey=:activationkey, forgotkey=:forgotkey, salt=:salt WHERE id=:id" );
 			$stmt->execute ( array (
 					"username" => $this->username,
 					"password" => $this->password,
 					"group_id" => $this->group_id,
 					"activationkey" => $this->activationkey,
 					"forgotkey" => $this->forgotkey,
+					"email" => $this->email,
 					"salt" => $this->salt,
 					"id" => $this->id 
 			) );
