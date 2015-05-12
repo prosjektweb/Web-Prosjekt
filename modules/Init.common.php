@@ -17,7 +17,7 @@ global $smarty;
 $smarty = new Smarty ();
 
 // Options
-$smarty->debugging = false;
+$smarty->debugging = true;
 $smarty->caching = false;
 
 // Set some path urls because of mod rewrite
